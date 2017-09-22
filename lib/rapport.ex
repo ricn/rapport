@@ -2,6 +2,21 @@ defmodule Rapport do
   @moduledoc """
   Documentation for Rapport.
   """
+  @base_template """
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>A4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.2.3/paper.css">
+    <style>@page { size: A4 }</style>
+  </head>
+  <body class="A4">
+    <%= @content %>
+  </body>
+  </html>
+  """
 
   defstruct template: nil, paper_size: nil, rotation: nil, fields: nil
 
@@ -23,6 +38,7 @@ defmodule Rapport do
   end
 
   def generate_html(%Rapport{} = report) do
-    EEx.eval_string report.template, assigns: report.fields
+    content = EEx.eval_string report.template, assigns: report.fields
+    EEx.eval_string @base_template, assigns: [content: content]
   end
 end
