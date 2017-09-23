@@ -131,6 +131,96 @@ defmodule RapportTest do
     assert html_report =~ "<body class=\"A5 landscape\">"
   end
 
+  test "half_letter portrait" do
+    html_report =
+      Rapport.new(@empty_template, :half_letter, :portrait)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: half_letter}</style>"
+    assert html_report =~ "<body class=\"half_letter\">"
+  end
+
+  test "half_letter landscape" do
+    html_report =
+      Rapport.new(@empty_template, :half_letter, :landscape)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: half_letter landscape}</style>"
+    assert html_report =~ "<body class=\"half_letter landscape\">"
+  end
+
+  test "letter portrait" do
+    html_report =
+      Rapport.new(@empty_template, :letter, :portrait)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: letter}</style>"
+    assert html_report =~ "<body class=\"letter\">"
+  end
+
+  test "letter landscape" do
+    html_report =
+      Rapport.new(@empty_template, :letter, :landscape)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: letter landscape}</style>"
+    assert html_report =~ "<body class=\"letter landscape\">"
+  end
+
+  test "legal portrait" do
+    html_report =
+      Rapport.new(@empty_template, :legal, :portrait)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: legal}</style>"
+    assert html_report =~ "<body class=\"legal\">"
+  end
+
+  test "legal landscape" do
+    html_report =
+      Rapport.new(@empty_template, :legal, :landscape)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: legal landscape}</style>"
+    assert html_report =~ "<body class=\"legal landscape\">"
+  end
+
+  test "junior legal portrait" do
+    html_report =
+      Rapport.new(@empty_template, :junior_legal, :portrait)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: junior_legal}</style>"
+    assert html_report =~ "<body class=\"junior_legal\">"
+  end
+
+  test "junior legal landscape" do
+    html_report =
+      Rapport.new(@empty_template, :junior_legal, :landscape)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: junior_legal landscape}</style>"
+    assert html_report =~ "<body class=\"junior_legal landscape\">"
+  end
+
+  test "ledger portrait" do
+    html_report =
+      Rapport.new(@empty_template, :ledger, :portrait)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: ledger}</style>"
+    assert html_report =~ "<body class=\"ledger\">"
+  end
+
+  test "ledger landscape" do
+    html_report =
+      Rapport.new(@empty_template, :ledger, :landscape)
+      |> Rapport.generate_html
+
+    assert html_report =~ "<style>@page {size: ledger landscape}</style>"
+    assert html_report =~ "<body class=\"ledger landscape\">"
+  end
+
   ### CSS
   test "make sure normalize & paper css is included" do
     html_report =
