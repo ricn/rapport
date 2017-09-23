@@ -3,7 +3,8 @@ defmodule Rapport do
   @moduledoc """
   Documentation for Rapport.
   """
-
+  @normalize_css File.read!(Path.join(__DIR__, "normalize.css"))
+  @paper_css File.read!(Path.join(__DIR__, "paper.css"))
   @base_template File.read!(Path.join(__DIR__, "base_template.html.eex"))
 
   defstruct template: nil, paper_size: nil, rotation: nil, fields: nil, title: nil
@@ -35,7 +36,13 @@ defmodule Rapport do
   def generate_html(%Rapport{} = report) do
     content = EEx.eval_string report.template, assigns: report.fields
     paper_settings = paper_settings_css(report)
-    assigns = [content: content, title: report.title, paper_settings: paper_settings]
+    assigns = [
+      content: content,
+      title: report.title,
+      paper_settings: paper_settings,
+      normalize_css: @normalize_css,
+      paper_css: @paper_css]
+
     EEx.eval_string @base_template, assigns: assigns
   end
 
