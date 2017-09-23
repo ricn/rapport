@@ -5,9 +5,9 @@
   <title><%= @title %></title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.2.3/paper.css">
-  <style>@page { size: A4 }</style>
+  <style>@page {size: <%= @paper_settings %>}</style>
 </head>
-<body class="A4">
+<body class="<%= @paper_settings %>">
   <%= @content %>
 </body>
 </html>

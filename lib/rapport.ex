@@ -34,6 +34,14 @@ defmodule Rapport do
 
   def generate_html(%Rapport{} = report) do
     content = EEx.eval_string report.template, assigns: report.fields
-    EEx.eval_string @base_template, assigns: [content: content, title: report.title]
+    paper_settings = paper_settings_css(report)
+    assigns = [content: content, title: report.title, paper_settings: paper_settings]
+    EEx.eval_string @base_template, assigns: assigns
+  end
+
+  defp paper_settings_css(%Rapport{} = report) do
+    paper_size = Atom.to_string(report.paper_size)
+    rotation = Atom.to_string(report.rotation)
+    if rotation == "portrait", do: paper_size, else: "#{paper_size} #{rotation}"
   end
 end
