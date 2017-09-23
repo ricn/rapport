@@ -1,4 +1,5 @@
 defmodule Rapport do
+
   @moduledoc """
   Documentation for Rapport.
   """

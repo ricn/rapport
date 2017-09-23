@@ -1,0 +1,27 @@
+<style>
+  table {
+    width: 100%;
+  }
+  th, td {
+    padding: 2px;
+    text-align: left;
+    border: 1px solid;
+  }
+</style>
+
+<section class="sheet padding-10mm">
+  <table>
+    <tr>
+      <th>Firstname</th>
+      <th>Lastname</th>
+      <th>Age</th>
+    </tr>
+  <%= for person <- @people do %>
+    <tr>
+      <td><%= person.firstname %></td>
+      <td><%= person.lastname %></td>
+      <td><%= person.age %></td>
+    </tr>
+  <% end %>
+  </table>
+</section>

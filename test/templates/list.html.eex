@@ -1,0 +1,5 @@
+<section class="sheet padding-10mm">
+  <%= for item <- @list do %>
+    <p><%= item %></p>
+    <% end %>
+</section>
