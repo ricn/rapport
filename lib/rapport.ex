@@ -3,21 +3,8 @@ defmodule Rapport do
   @moduledoc """
   Documentation for Rapport.
   """
-  @base_template """
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>A4</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.2.3/paper.css">
-    <style>@page { size: A4 }</style>
-  </head>
-  <body class="A4">
-    <%= @content %>
-  </body>
-  </html>
-  """
+
+  @base_template File.read!(Path.join(__DIR__, "base_template.html.eex"))
 
   defstruct template: nil, paper_size: nil, rotation: nil, fields: nil
 
