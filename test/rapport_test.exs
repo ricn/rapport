@@ -238,4 +238,10 @@ defmodule RapportTest do
     end
   end
 
+  test "new must raise argument error when rotation is invalid" do
+    assert_raise ArgumentError, ~r/^Invalid rotation/, fn ->
+      Rapport.new(@empty_template, :A4, :nope)
+    end
+  end
+
 end

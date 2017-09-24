@@ -11,7 +11,9 @@ defmodule Rapport do
 
   def new(template_path, paper_size \\ :A4, rotation \\ :portrait)
   when is_binary(template_path) and is_atom(paper_size) and is_atom(rotation) do
+
     validate_paper_size(paper_size)
+    validate_rotation(rotation)
 
     {:ok, template_content} = File.read(template_path)
     %Rapport{
@@ -27,10 +29,7 @@ defmodule Rapport do
   end
 
   def set_field(%Rapport{} = report, field_name, field_value) when is_atom(field_name) do
-    fields =
-      report.fields
-      |> Map.put(field_name, field_value)
-
+    fields = report.fields |> Map.put(field_name, field_value)
     Map.put(report, :fields, fields)
   end
 
@@ -59,5 +58,11 @@ defmodule Rapport do
     allowed_paper_sizes = [:A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal, :ledger]
     msg = "Invalid paper size"
     if paper_size not in allowed_paper_sizes, do: raise ArgumentError, message: msg
+  end
+
+  defp validate_rotation(rotation) do
+    allowed_rotations = [:portrait, :landscape]
+    msg = "Invalid rotation"
+    if rotation not in allowed_rotations, do: raise ArgumentError, message: msg
   end
 end
