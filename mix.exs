@@ -4,10 +4,12 @@ defmodule Rapport.Mixfile do
   def project do
     [
       app: :rapport,
-      version: "0.1.0",
+      version: "0.5.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
-      deps: deps()
+      deps: deps(),
+      description: desc(),
+      package: package()
     ]
   end
 
@@ -24,5 +26,16 @@ defmodule Rapport.Mixfile do
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
+  end
+
+  defp desc do
+    "Reporting solution for Elixir"
+  end
+
+  defp package do
+      [files: ["lib", "mix.exs", "README*", "LICENSE*"],
+       maintainers: ["Richard Nyström"],
+       licenses: ["MIT"],
+       links: %{"GitHub" => "https://github.com/ricn/rapport", "Docs" => "http://hexdocs.pm/rapport"}]
   end
 end
