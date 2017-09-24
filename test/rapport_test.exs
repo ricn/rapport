@@ -76,6 +76,13 @@ defmodule RapportTest do
     assert html_report =~ "<title>My title</title>"
   end
 
+  test "title must be a binary" do
+    assert_raise FunctionClauseError, ~r/^no function clause matching in Rapport.set_title/, fn ->
+      Rapport.new(@hello_template)
+        |> Rapport.set_title([])
+    end
+  end
+
   ### Paper sizes & rotation
   test "A4 portrait" do
     html_report =
@@ -232,16 +239,32 @@ defmodule RapportTest do
 
   ### new
 
-  test "new must raise argument error when paper size is invalid" do
+  test "must raise argument error when paper size is invalid" do
     assert_raise ArgumentError, ~r/^Invalid paper size/, fn ->
       Rapport.new(@empty_template, :WRONG)
     end
   end
 
-  test "new must raise argument error when rotation is invalid" do
+  test "must raise argument error when rotation is invalid" do
     assert_raise ArgumentError, ~r/^Invalid rotation/, fn ->
       Rapport.new(@empty_template, :A4, :nope)
     end
   end
+
+  test "must allow inline template" do
+    inline_template = """
+    <section class="sheet padding-10mm">
+      <article><%= @hello %></article>
+    </section>
+    """
+    html_report =
+      Rapport.new(inline_template)
+      |> Rapport.set_field(:hello, "Inline template")
+      |> Rapport.generate_html
+
+    assert html_report =~ "Inline template"
+  end
+
+  ### set
 
 end

@@ -9,13 +9,13 @@ defmodule Rapport do
 
   defstruct template: nil, paper_size: nil, rotation: nil, fields: nil, title: nil
 
-  def new(template_path, paper_size \\ :A4, rotation \\ :portrait)
-  when is_binary(template_path) and is_atom(paper_size) and is_atom(rotation) do
+  def new(template, paper_size \\ :A4, rotation \\ :portrait)
+  when is_binary(template) and is_atom(paper_size) and is_atom(rotation) do
+    template_content = template_content(template)
 
     validate_paper_size(paper_size)
     validate_rotation(rotation)
 
-    {:ok, template_content} = File.read(template_path)
     %Rapport{
       template: template_content,
       paper_size: paper_size,
@@ -33,7 +33,9 @@ defmodule Rapport do
     Map.put(report, :fields, fields)
   end
 
-  def set_title(%Rapport{} = report, title), do: Map.put(report, :title, title)
+  def set_title(%Rapport{} = report, title) when is_binary(title) do
+    Map.put(report, :title, title)
+  end
 
   def generate_html(%Rapport{} = report) do
     content = EEx.eval_string report.template, assigns: report.fields
@@ -64,5 +66,9 @@ defmodule Rapport do
     allowed_rotations = [:portrait, :landscape]
     msg = "Invalid rotation"
     if rotation not in allowed_rotations, do: raise ArgumentError, message: msg
+  end
+
+  defp template_content(template) do
+    if (File.exists?(template)), do: File.read!(template), else: template
   end
 end
