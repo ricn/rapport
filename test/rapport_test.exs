@@ -230,4 +230,12 @@ defmodule RapportTest do
     assert html_report =~ "paper.css"
   end
 
+  ### new
+
+  test "new must raise argument error when paper size is invalid" do
+    assert_raise ArgumentError, ~r/^Invalid paper size/, fn ->
+      Rapport.new(@empty_template, :WRONG)
+    end
+  end
+
 end

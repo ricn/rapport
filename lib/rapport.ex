@@ -9,7 +9,10 @@ defmodule Rapport do
 
   defstruct template: nil, paper_size: nil, rotation: nil, fields: nil, title: nil
 
-  def new(template_path, paper_size \\ :A4, rotation \\ :portrait) when is_binary(template_path) and is_atom(paper_size) and is_atom(rotation) do
+  def new(template_path, paper_size \\ :A4, rotation \\ :portrait)
+  when is_binary(template_path) and is_atom(paper_size) and is_atom(rotation) do
+    validate_paper_size(paper_size)
+
     {:ok, template_content} = File.read(template_path)
     %Rapport{
       template: template_content,
@@ -50,5 +53,11 @@ defmodule Rapport do
     paper_size = Atom.to_string(report.paper_size)
     rotation = Atom.to_string(report.rotation)
     if rotation == "portrait", do: paper_size, else: "#{paper_size} #{rotation}"
+  end
+
+  defp validate_paper_size(paper_size) do
+    allowed_paper_sizes = [:A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal, :ledger]
+    msg = "Invalid paper size"
+    if paper_size not in allowed_paper_sizes, do: raise ArgumentError, message: msg
   end
 end
