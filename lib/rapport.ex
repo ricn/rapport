@@ -9,7 +9,7 @@ defmodule Rapport do
 
   defstruct template: nil, paper_size: nil, rotation: nil, fields: nil, title: nil
 
-  def new(template_path, paper_size \\ :A4, rotation \\ :portrait) do
+  def new(template_path, paper_size \\ :A4, rotation \\ :portrait) when is_binary(template_path) and is_atom(paper_size) and is_atom(rotation) do
     {:ok, template_content} = File.read(template_path)
     %Rapport{
       template: template_content,
