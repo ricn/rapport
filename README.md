@@ -2,6 +2,10 @@
 
 Reporting solution for Elixir using EEx templates, HTML and CSS built to support printing.
 
+[![Build Status](https://travis-ci.org/ricn/rapport.png?branch=master)](https://travis-ci.org/ricn/rapport)
+[![Hex.pm](https://img.shields.io/hexpm/v/rapport.svg)](https://hex.pm/packages/rapport)
+[![Inline docs](http://inch-ci.org/github/ricn/rapport.svg?branch=master)](http://inch-ci.org/github/ricn/rapport)
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
