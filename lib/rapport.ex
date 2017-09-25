@@ -12,7 +12,6 @@ defmodule Rapport do
   def new(template, paper_size \\ :A4, rotation \\ :portrait)
   when is_binary(template) and is_atom(paper_size) and is_atom(rotation) do
     template_content = template_content(template)
-
     validate_paper_size(paper_size)
     validate_rotation(rotation)
 
