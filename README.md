@@ -1,6 +1,6 @@
 # Rapport
 
-**TODO: Add description**
+Reporting solution for Elixir using EEx templates, HTML and CSS built to support printing.
 
 ## Installation
 
@@ -10,12 +10,21 @@ by adding `rapport` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:rapport, "~> 0.1.0"}
+    {:rapport, "~> 0.4.0"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/rapport](https://hexdocs.pm/rapport).
+## Basic Usage
 
+```elixir
+template = """
+<section class="sheet padding-10mm">
+  <article><%= @hello %></article>
+</section>
+"""
+html_report =
+  Rapport.new(template)
+  |> Rapport.set_field(:hello, "Inline template")
+  |> Rapport.generate_html
+```
