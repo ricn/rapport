@@ -34,7 +34,6 @@ html_report =
 The following people have contributed ideas, documentation, or code to Librex:
 
 * Richard Nyström
-* Sergey Chechaev
 
 ## Contributing
 
