@@ -15,7 +15,7 @@ by adding `rapport` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:rapport, "~> 0.1.0"}
+    {:rapport, "~> 0.2.0"}
   ]
 end
 ```
@@ -29,8 +29,8 @@ template = """
 </section>
 """
 html_report =
-  Rapport.new(template)
-  |> Rapport.set_field(:hello, "Inline template")
+  Rapport.new
+  |> Rapport.add_page(template, %{hello: "Hello world!"})
   |> Rapport.generate_html
 ```
 
