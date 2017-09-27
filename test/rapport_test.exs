@@ -8,85 +8,24 @@ defmodule RapportTest do
   @list_map_template Path.join(__DIR__, "templates/list_map.html.eex")
   @empty_template Path.join(__DIR__, "templates/empty.html.eex")
 
-  ### set_field
-  describe "set_field/2" do
-    test "set_field" do
-      html_report =
-        Rapport.new(@hello_template)
-        |> Rapport.set_field(:hello, "Hello World!")
-        |> Rapport.generate_html
+  describe "new" do
 
-      assert html_report =~ "Hello World!"
+    test "simplest possible" do
+      report = Rapport.new
+      assert is_map(report)
+      assert Map.has_key?(report, :title)
+      assert Map.get(report, :title) == "Report"
+      assert Map.has_key?(report, :paper_size)
+      assert Map.has_key?(report, :rotation)
+      assert Map.has_key?(report, :pages)
+      assert is_list(Map.get(report, :pages))
     end
 
-    test "set_field two times" do
-      html_report =
-        Rapport.new(@two_fields_template)
-        |> Rapport.set_field(:first, "first!")
-        |> Rapport.set_field(:second, "second!")
-        |> Rapport.generate_html
-
-      assert html_report =~ "first!"
-      assert html_report =~ "second!"
+    test "set title" do
+      report = Rapport.new("My report")
+      assert Map.get(report, :title) == "My report"
     end
 
-    test "set_field with a list" do
-      html_report =
-        Rapport.new(@list_template)
-        |> Rapport.set_field(:list, ["one", "two", "three"])
-        |> Rapport.generate_html
-
-      assert html_report =~ "one"
-      assert html_report =~ "two"
-      assert html_report =~ "three"
-    end
-
-    test "set_field with a list of maps" do
-      people = [
-        %{firstname: "Richard", lastname: "Nyström", age: 33},
-        %{firstname: "Kristin", lastname: "Nyvall", age: 34},
-        %{firstname: "Nils", lastname: "Nyvall", age: 3}
-      ]
-      html_report =
-        Rapport.new(@list_map_template)
-        |> Rapport.set_field(:people, people)
-        |> Rapport.generate_html
-
-      assert html_report =~ "Richard"
-      assert html_report =~ "Nyvall"
-      assert html_report =~ "33"
-    end
-
-    test "set_field using a string key" do
-      html_report =
-        Rapport.new(@hello_template)
-        |> Rapport.set_field("hello", "Hello World!")
-        |> Rapport.generate_html
-
-      assert html_report =~ "Hello World!"
-    end
-  end
-
-  describe "set_title/2" do
-    test "set_title" do
-      html_report =
-        Rapport.new(@hello_template)
-        |> Rapport.set_title("My title")
-        |> Rapport.set_field("hello", "Hello World!")
-        |> Rapport.generate_html
-
-      assert html_report =~ "<title>My title</title>"
-    end
-
-    test "title must be a binary" do
-      assert_raise FunctionClauseError, ~r/^no function clause matching in Rapport.set_title/, fn ->
-        Rapport.new(@hello_template)
-          |> Rapport.set_title([])
-      end
-    end
-  end
-
-  describe "new/3" do
     test "must raise argument error when paper size is invalid" do
       assert_raise ArgumentError, ~r/^Invalid paper size/, fn ->
         Rapport.new(@empty_template, :WRONG)
@@ -106,8 +45,8 @@ defmodule RapportTest do
       </section>
       """
       html_report =
-        Rapport.new(inline_template)
-        |> Rapport.set_field(:hello, "Inline template")
+        Rapport.new
+        |> Rapport.add_page(inline_template, %{hello: "Inline template"})
         |> Rapport.generate_html
 
       assert html_report =~ "Inline template"
@@ -258,7 +197,79 @@ defmodule RapportTest do
     end
   end
 
-  describe "generate_html/1" do
+  describe "add_page" do
+    test "add one page" do
+      report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Hello world"})
+
+      assert length(report.pages) == 1
+    end
+
+    test "add two pages" do
+      report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "One"})
+        |> Rapport.add_page(@hello_template, %{hello: "Two"})
+
+      assert length(report.pages) == 2
+    end
+  end
+
+  ### set_field
+  describe "set_field/2" do
+    test "set_field" do
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Hello World!"})
+        |> Rapport.generate_html
+
+      assert html_report =~ "Hello World!"
+    end
+
+    test "set_field two times" do
+      fields = %{first: "first!", second: "second!"}
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@two_fields_template, fields)
+        |> Rapport.generate_html
+
+      assert html_report =~ "first!"
+      assert html_report =~ "second!"
+    end
+
+    test "set_field with a list" do
+      list = ["one", "two", "three"]
+
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@list_template, %{list: list})
+        |> Rapport.generate_html
+
+      assert html_report =~ "one"
+      assert html_report =~ "two"
+      assert html_report =~ "three"
+    end
+
+    test "set_field with a list of maps" do
+      people = [
+        %{firstname: "Richard", lastname: "Nyström", age: 33},
+        %{firstname: "Kristin", lastname: "Nyvall", age: 34},
+        %{firstname: "Nils", lastname: "Nyvall", age: 3}
+      ]
+      fields = %{people: people}
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@list_map_template, fields)
+        |> Rapport.generate_html
+
+      assert html_report =~ "Richard"
+      assert html_report =~ "Nyvall"
+      assert html_report =~ "33"
+    end
+  end
+
+  describe "generate_html" do
     test "make sure normalize & paper css is included" do
       html_report =
         Rapport.new(@empty_template)

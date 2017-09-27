@@ -8,6 +8,6 @@
   <style>@page {size: <%= @paper_settings %>}</style>
 </head>
 <body class="<%= @paper_settings %>">
-  <%= @content %>
+  <%= @pages %>
 </body>
 </html>
