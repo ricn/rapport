@@ -21,23 +21,6 @@ defmodule RapportTest do
       assert is_list(Map.get(report, :pages))
     end
 
-    test "must set title" do
-      report = Rapport.new("My report")
-      assert Map.get(report, :title) == "My report"
-    end
-
-    test "must raise argument error when paper size is invalid" do
-      assert_raise ArgumentError, ~r/^Invalid paper size/, fn ->
-        Rapport.new(@empty_template, :WRONG)
-      end
-    end
-
-    test "must raise argument error when rotation is invalid" do
-      assert_raise ArgumentError, ~r/^Invalid rotation/, fn ->
-        Rapport.new(@empty_template, :A4, :nope)
-      end
-    end
-
     # Move this to add_page
     test "must allow inline template" do
       inline_template = """
@@ -51,20 +34,6 @@ defmodule RapportTest do
         |> Rapport.generate_html
 
       assert html_report =~ "Inline template"
-    end
-
-    test "all allowed paper sizes" do
-      all = [:A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal, :ledger]
-      Enum.each(all, fn(paper_size) ->
-        assert Rapport.new("Title", paper_size, :portrait).paper_size == paper_size
-      end)
-    end
-
-    test "all allowed rotations" do
-      all = [:portrait, :landscape]
-      Enum.each(all, fn(rotation) ->
-        assert Rapport.new("Title", :A4, rotation).rotation == rotation
-      end)
     end
   end
 
@@ -99,7 +68,8 @@ defmodule RapportTest do
 
     test "must set paper size correctly" do
       html_report =
-        Rapport.new("Report", :A5, :portrait)
+        Rapport.new
+        |> Rapport.set_paper_size(:A5)
         |> Rapport.generate_html
 
       assert html_report =~ "<style>@page {size: A5}</style>"
@@ -108,11 +78,12 @@ defmodule RapportTest do
 
     test "must set rotation correctly" do
       html_report =
-        Rapport.new("Report", :A5, :landscape)
+        Rapport.new
+        |> Rapport.set_rotation(:landscape)
         |> Rapport.generate_html
 
-      assert html_report =~ "<style>@page {size: A5 landscape}</style>"
-      assert html_report =~ "<body class=\"A5 landscape\">"
+      assert html_report =~ "<style>@page {size: A4 landscape}</style>"
+      assert html_report =~ "<body class=\"A4 landscape\">"
     end
 
     test "must generate correct html with one field" do
@@ -163,6 +134,71 @@ defmodule RapportTest do
       assert html_report =~ "Richard"
       assert html_report =~ "Nyvall"
       assert html_report =~ "33"
+    end
+  end
+
+  describe "set_title" do
+    test "must set the title for the report" do
+      html_report =
+        Rapport.new
+        |> Rapport.set_title("My new title")
+        |> Rapport.generate_html
+
+      assert html_report =~ "<title>My new title</title>"
+    end
+  end
+
+  describe "set_paper_size" do
+    test "must set paper size for the report" do
+      html_report =
+        Rapport.new
+        |> Rapport.set_paper_size(:A5)
+        |> Rapport.generate_html
+
+        assert html_report =~ "<style>@page {size: A5}</style>"
+        assert html_report =~ "<body class=\"A5\">"
+    end
+
+    test "must raise argument error when paper size is invalid" do
+      assert_raise ArgumentError, ~r/^Invalid paper size/, fn ->
+        Rapport.new
+        |> Rapport.set_paper_size(:WRONG)
+      end
+    end
+
+    test "all allowed paper sizes" do
+      all = [:A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal, :ledger]
+      report = Rapport.new
+      Enum.each(all, fn(paper_size) ->
+        assert Rapport.set_paper_size(report, paper_size).paper_size == paper_size
+      end)
+    end
+  end
+
+  describe "set_rotation" do
+    test "must rotation for the report" do
+      html_report =
+        Rapport.new
+        |> Rapport.set_rotation(:landscape)
+        |> Rapport.generate_html
+
+        assert html_report =~ "<style>@page {size: A4 landscape}</style>"
+        assert html_report =~ "<body class=\"A4 landscape\">"
+    end
+
+    test "must raise argument error when rotation is invalid" do
+      assert_raise ArgumentError, ~r/^Invalid rotation/, fn ->
+        Rapport.new
+        |> Rapport.set_rotation(:nope)
+      end
+    end
+
+    test "all allowed rotations" do
+      all = [:portrait, :landscape]
+      report = Rapport.new
+      Enum.each(all, fn(rotation) ->
+        assert Rapport.set_rotation(report, rotation).rotation == rotation
+      end)
     end
   end
 end

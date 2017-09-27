@@ -11,23 +11,26 @@ defmodule Rapport do
   @paper_css File.read!(Path.join(__DIR__, "paper.css"))
   @base_template File.read!(Path.join(__DIR__, "base_template.html.eex"))
 
-  def new(title \\ "Report", paper_size \\ :A4, rotation \\ :portrait)
-  when is_binary(title) and is_atom(paper_size) and is_atom(rotation) do
-    validate_paper_size(paper_size)
-    validate_rotation(rotation)
-
-    %Report{
-      title: title,
-      paper_size: paper_size,
-      rotation: rotation,
-      pages: []
-    }
-  end
+  def new(template \\ nil), do: %Report{ title: "Report", paper_size: :A4, rotation: :portrait, pages: []}
 
   def add_page(%Report{} = report, page_template, %{} = fields) do
     template = template_content(page_template)
     new_page = %Page{template: template, fields: fields}
     Map.put(report, :pages, [new_page | report.pages])
+  end
+
+  def set_title(%Report{} = report, title) when is_binary(title) do
+    Map.put(report, :title, title)
+  end
+
+  def set_paper_size(%Report{} = report, paper_size) do
+    validate_paper_size(paper_size)
+    Map.put(report, :paper_size, paper_size)
+  end
+
+  def set_rotation(%Report{} = report, rotation) do
+    validate_rotation(rotation)
+    Map.put(report, :rotation, rotation)
   end
 
   def generate_html(%Report{} = report) do
