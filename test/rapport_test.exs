@@ -59,6 +59,13 @@ defmodule RapportTest do
         assert Rapport.new("Title", paper_size, :portrait).paper_size == paper_size
       end)
     end
+
+    test "all allowed rotations" do
+      all = [:portrait, :landscape]
+      Enum.each(all, fn(rotation) ->
+        assert Rapport.new("Title", :A4, rotation).rotation == rotation
+      end)
+    end
   end
 
   describe "add_page" do
@@ -108,7 +115,7 @@ defmodule RapportTest do
       assert html_report =~ "<body class=\"A5 landscape\">"
     end
 
-    test "set_field" do
+    test "must generate correct html with one field" do
       html_report =
         Rapport.new
         |> Rapport.add_page(@hello_template, %{hello: "Hello World!"})
@@ -117,7 +124,7 @@ defmodule RapportTest do
       assert html_report =~ "<article>Hello World!</article>"
     end
 
-    test "set_field two times" do
+    test "must generate correct html with several fields" do
       fields = %{first: "first!", second: "second!"}
       html_report =
         Rapport.new
@@ -128,7 +135,7 @@ defmodule RapportTest do
       assert html_report =~ "second!"
     end
 
-    test "set_field with a list" do
+    test "must generate html with lists" do
       list = ["one", "two", "three"]
 
       html_report =
@@ -141,7 +148,7 @@ defmodule RapportTest do
       assert html_report =~ "three"
     end
 
-    test "set_field with a list of maps" do
+    test "must generate html with maps" do
       people = [
         %{firstname: "Richard", lastname: "Nyström", age: 33},
         %{firstname: "Kristin", lastname: "Nyvall", age: 34},
@@ -157,6 +164,5 @@ defmodule RapportTest do
       assert html_report =~ "Nyvall"
       assert html_report =~ "33"
     end
-
   end
 end
