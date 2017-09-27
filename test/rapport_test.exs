@@ -272,7 +272,7 @@ defmodule RapportTest do
   describe "generate_html" do
     test "make sure normalize & paper css is included" do
       html_report =
-        Rapport.new(@empty_template)
+        Rapport.new
         |> Rapport.generate_html
       assert html_report =~ "normalize.css v7.0.0"
       assert html_report =~ "paper.css"
