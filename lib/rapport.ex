@@ -11,7 +11,10 @@ defmodule Rapport do
   @paper_css File.read!(Path.join(__DIR__, "paper.css"))
   @base_template File.read!(Path.join(__DIR__, "base_template.html.eex"))
 
-  def new(template \\ nil), do: %Report{ title: "Report", paper_size: :A4, rotation: :portrait, pages: []}
+  def new(template \\ "") do
+    report_template = template_content(template)
+    %Report{title: "Report", paper_size: :A4, rotation: :portrait, pages: [], template: report_template}
+  end
 
   def add_page(%Report{} = report, page_template, %{} = fields) do
     template = template_content(page_template)
@@ -42,7 +45,8 @@ defmodule Rapport do
       paper_settings: paper_settings,
       normalize_css: @normalize_css,
       paper_css: @paper_css,
-      pages: pages
+      pages: pages,
+      report_template: report.template
     ]
 
     EEx.eval_string @base_template, assigns: assigns

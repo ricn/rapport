@@ -6,7 +6,6 @@ defmodule RapportTest do
   @two_fields_template Path.join(__DIR__, "templates/two_fields.html.eex")
   @list_template Path.join(__DIR__, "templates/list.html.eex")
   @list_map_template Path.join(__DIR__, "templates/list_map.html.eex")
-  @empty_template Path.join(__DIR__, "templates/empty.html.eex")
 
   describe "new" do
 
@@ -19,6 +18,27 @@ defmodule RapportTest do
       assert Map.has_key?(report, :rotation)
       assert Map.has_key?(report, :pages)
       assert is_list(Map.get(report, :pages))
+    end
+
+    test "must allow report template" do
+      style = """
+      <style>
+        h1 {
+          color: red;
+        }
+      </style>
+      """
+      page_template = """
+      <section class="sheet padding-10mm">
+        <h1><%= @hello %></h1>
+      </section>
+      """
+      html_report =
+        Rapport.new(style)
+        |> Rapport.add_page(page_template, %{hello: "Hello!"})
+        |> Rapport.generate_html
+
+      assert html_report =~ "color: red;"
     end
 
     # Move this to add_page

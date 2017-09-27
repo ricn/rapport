@@ -1,3 +1,3 @@
 defmodule Rapport.Report do
-  defstruct paper_size: nil, rotation: nil, title: nil, pages: nil
+  defstruct paper_size: nil, rotation: nil, title: nil, pages: nil, template: nil
 end
