@@ -34,17 +34,19 @@ defmodule Rapport do
   end
 
   def set_paper_size(%Report{} = report, paper_size) do
-    validate_paper_size(paper_size)
+    validate_list(paper_size,
+    [:A4, :A3, :A5, :half_letter, :letter,
+    :legal, :junior_legal, :ledger], "Invalid paper size")
     Map.put(report, :paper_size, paper_size)
   end
 
   def set_rotation(%Report{} = report, rotation) do
-    validate_rotation(rotation)
+    validate_list(rotation, [:portrait, :landscape], "Invalid rotation")
     Map.put(report, :rotation, rotation)
   end
 
   def set_padding(%Report{} = report, padding) do
-    validate_padding(padding)
+    validate_list(padding, [10, 15, 20, 25], "Invalid padding")
     Map.put(report, :padding, padding)
   end
 
@@ -89,22 +91,8 @@ defmodule Rapport do
     if rotation == "portrait", do: paper_size, else: "#{paper_size} #{rotation}"
   end
 
-  defp validate_paper_size(paper_size) do
-    allowed_paper_sizes = [:A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal, :ledger]
-    msg = "Invalid paper size"
-    if paper_size not in allowed_paper_sizes, do: raise ArgumentError, message: msg
-  end
-
-  defp validate_rotation(rotation) do
-    allowed_rotations = [:portrait, :landscape]
-    msg = "Invalid rotation"
-    if rotation not in allowed_rotations, do: raise ArgumentError, message: msg
-  end
-
-  defp validate_padding(padding) do
-    allowed_paddings = [10, 15, 20, 25]
-    msg = "Invalid padding"
-    if padding not in allowed_paddings, do: raise ArgumentError, message: msg
+  defp validate_list(what, list, msg) do
+    if what not in list, do: raise ArgumentError, message: msg
   end
 
   defp template_content(template) do
