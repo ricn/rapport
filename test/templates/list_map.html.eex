@@ -9,7 +9,6 @@
   }
 </style>
 
-<section class="sheet padding-10mm">
   <table>
     <tr>
       <th>Firstname</th>
@@ -24,4 +23,3 @@
     </tr>
   <% end %>
   </table>
-</section>

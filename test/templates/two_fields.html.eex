@@ -1,4 +1,2 @@
-<section class="sheet padding-10mm">
-  <article><%= @first %></article>
-  <article><%= @second %></article>
-</section>
+<article><%= @first %></article>
+<article><%= @second %></article>

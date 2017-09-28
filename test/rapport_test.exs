@@ -221,4 +221,31 @@ defmodule RapportTest do
       end)
     end
   end
+
+  describe "set_padding" do
+    test "must set padding on all pages" do
+      html_report =
+        Rapport.new
+        |> Rapport.set_padding(20)
+        |> Rapport.add_page(@hello_template, %{hello: "hello"})
+        |> Rapport.generate_html
+
+        assert html_report =~ "<div class=\"sheet padding-20mm\">"
+    end
+
+    test "all allowed paddings" do
+      all = [10, 15, 20, 25]
+      report = Rapport.new
+      Enum.each(all, fn(padding) ->
+        assert Rapport.set_padding(report, padding).padding == padding
+      end)
+    end
+
+    test "must raise argument error when padding is invalid" do
+      assert_raise ArgumentError, ~r/^Invalid padding/, fn ->
+        Rapport.new
+        |> Rapport.set_padding(5)
+      end
+    end
+  end
 end
