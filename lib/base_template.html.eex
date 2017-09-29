@@ -6,9 +6,9 @@
   <style><%= @normalize_css %></style>
   <style><%= @paper_css %></style>
   <style>@page {size: <%= @paper_settings %>}</style>
+  <%= @report_template %>
 </head>
 <body class="<%= @paper_settings %>">
-  <%= @report_template %>
   <%= @pages %>
 </body>
 </html>
