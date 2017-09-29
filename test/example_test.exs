@@ -1,5 +1,6 @@
 defmodule ExampleTest do
   use ExUnit.Case
+  @moduletag :external
 
   test "hello.html" do
     page_template = "<h1><%= @hello %></h1>"
@@ -12,7 +13,7 @@ defmodule ExampleTest do
     File.write!(file, html_report)
   end
 
-  test "custom fonts and styles" do
+  test "custom_fonts_and_styles.html" do
     report_template = """
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <style>
@@ -33,7 +34,7 @@ defmodule ExampleTest do
     File.write!(file, html_report)
   end
 
-  test "two page table" do
+  test "two_page_table.html" do
     report_template = Path.join(__DIR__, "templates/table_report.html.eex")
     page_template = Path.join(__DIR__, "templates/table_page.html.eex")
 
