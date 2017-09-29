@@ -9,6 +9,7 @@ defmodule Rapport.Mixfile do
       start_permanent: Mix.env == :prod,
       deps: deps(),
       description: desc(),
+      docs: docs(),
       package: package(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
@@ -20,6 +21,10 @@ defmodule Rapport.Mixfile do
     [
       extra_applications: [:logger]
     ]
+  end
+
+  defp docs do
+    [extras: ["README.md"], main: "readme"]
   end
 
   # Run "mix help deps" to learn about dependencies.
