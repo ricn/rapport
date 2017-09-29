@@ -248,4 +248,39 @@ defmodule RapportTest do
       end
     end
   end
+
+  # Tests that are used to generate examples files
+  describe "examples" do
+    test "hello.html" do
+      page_template = "<h1><%= @hello %></h1>"
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(page_template, %{hello: "Hello world!"})
+        |> Rapport.generate_html
+
+      file = Path.join([System.cwd, "examples", "hello.html"])
+      File.write!(file, html_report)
+    end
+
+    test "custom fonts and styles" do
+      report_template = """
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+      <style>
+        h1 {
+          font-family: 'Tangerine', serif;
+          font-size: 48px;
+          text-shadow: 4px 4px 4px #aaa;
+        }
+      </style>
+      """
+      page_template = "<h1><%= @hello %></h1>"
+      html_report =
+        Rapport.new(report_template)
+        |> Rapport.add_page(page_template, %{hello: "Hello world!"})
+        |> Rapport.generate_html
+
+      file = Path.join([System.cwd, "examples", "custom_fonts_and_styles.html"])
+      File.write!(file, html_report)
+    end
+  end
 end
