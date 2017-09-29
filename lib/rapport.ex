@@ -14,6 +14,15 @@ defmodule Rapport do
   @doc """
   Creates a new report.
 
+  An optional EEx template can be passed to the `new` function. This template
+  is meant to hold global things like styles, fonts etc that can be used on all
+  pages thats added to the report.
+
+  The `new` function sets the default paper size to `:A4`, the rotation
+  to `:portrait`, the page padding to 10mm and the report title to "Report".
+  Those defaults can easily be overridden by using `set_paper_size/2`,
+  `set_rotation/2`, `set_padding/2` and `set_title/2`. 
+
   Returns a `Rapport.Report` struct.
 
   ## Options
@@ -65,7 +74,9 @@ defmodule Rapport do
   @doc """
   Sets the paper size for the report.
 
-  Allowed paper sizes are :A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal and :ledger
+  It expects the paper size to be an atom and must be
+  `:A4`, `:A3`, `:A5`, `:half_letter`, `:letter`, `:legal`, `:junior_legal`
+   or `:ledger`, otherwise `ArgumentError` will be raised.
 
   ## Options
 
@@ -83,7 +94,8 @@ defmodule Rapport do
   @doc """
   Sets the rotation for the report.
 
-  Allowed rotations are :portrait and :landscape
+  It expects the rotation to an atom and must be `:portrait` or `:landscape`,
+  otherwise `ArgumentError` will be raised.
 
   ## Options
 
@@ -99,7 +111,8 @@ defmodule Rapport do
   @doc """
   Sets the padding (in millimeters) for the report.
 
-  Allowed paddings are 10, 15, 20, 25 mm
+  It expects the padding to be an integer and must be `10`, `15`, `20` or `25` mm,
+  otherwise `ArgumentError` will be raised.
 
   ## Options
 
