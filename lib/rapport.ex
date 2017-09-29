@@ -1,7 +1,8 @@
 defmodule Rapport do
 
   @moduledoc """
-  Documentation for Rapport.
+  Rapport aims to provide a robust set of modules to generate
+  HTML reports that both looks good in the browser and when being printed.
   """
 
   alias Rapport.Report
@@ -21,7 +22,7 @@ defmodule Rapport do
   The `new` function sets the default paper size to `:A4`, the rotation
   to `:portrait`, the page padding to 10mm and the report title to "Report".
   Those defaults can easily be overridden by using `set_paper_size/2`,
-  `set_rotation/2`, `set_padding/2` and `set_title/2`. 
+  `set_rotation/2`, `set_padding/2` and `set_title/2`.
 
   Returns a `Rapport.Report` struct.
 

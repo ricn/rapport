@@ -34,7 +34,10 @@ defmodule Rapport.Mixfile do
   end
 
   defp desc do
-    "Reporting solution for Elixir"
+    """
+    Rapport aims to provide a robust set of modules to generate
+    HTML reports that both looks good in the browser and when being printed.
+    """
   end
 
   defp package do
