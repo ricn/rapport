@@ -1,6 +1,6 @@
 # Rapport
 
-Reporting solution for Elixir using EEx templates, HTML and CSS built to support printing.
+Rapport aims to provide a robust set of modules to generate HTML reports that both looks good in the browser and when being printed.
 
 [![Build Status](https://travis-ci.org/ricn/rapport.png?branch=master)](https://travis-ci.org/ricn/rapport)
 [![Hex.pm](https://img.shields.io/hexpm/v/rapport.svg)](https://hex.pm/packages/rapport)
@@ -9,30 +9,51 @@ Reporting solution for Elixir using EEx templates, HTML and CSS built to support
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+The package can be installed
 by adding `rapport` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:rapport, "~> 0.2.0"}
+    {:rapport, "~> 0.3.0"}
   ]
 end
 ```
 
-## Basic Usage
+## Hello world
 
 ```elixir
-template = """
-<section class="sheet padding-10mm">
-  <article><%= @hello %></article>
-</section>
-"""
+page_template = "<h1><%= @hello %></h1>"
 html_report =
   Rapport.new
-  |> Rapport.add_page(template, %{hello: "Hello world!"})
+  |> Rapport.add_page(page_template, %{hello: "Hello world!"})
   |> Rapport.generate_html
 ```
+
+The snippet above generates a report containing only one page with a heading that says "Hello world!".
+
+## Add styling & custom fonts to a report
+
+```elixir
+report_template = """
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+<style>
+  h1 {
+    font-family: 'Tangerine', serif;
+    font-size: 48px;
+    text-shadow: 4px 4px 4px #aaa;
+    margin: 0
+  }
+</style>
+"""
+page_template = "<h1><%= @hello %></h1>"
+html_report =
+  Rapport.new(report_template)
+  |> Rapport.add_page(page_template, %{hello: "Hello world!"})
+  |> Rapport.generate_html
+```
+
+## Table and page breaks
 
 ## Credits
 
