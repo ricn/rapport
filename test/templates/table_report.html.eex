@@ -1,0 +1,10 @@
+<style>
+  table {
+    width: 100%;
+  }
+  th, td {
+    padding: 2px;
+    text-align: left;
+    border: 1px solid;
+  }
+</style>

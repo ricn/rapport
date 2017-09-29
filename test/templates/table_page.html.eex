@@ -1,0 +1,18 @@
+<table>
+  <tr>
+    <th>#</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Phone</th>
+    <th>E-mail</th>
+  </tr>
+<%= for person <- @people do %>
+  <tr>
+    <td><%= person.num %></td>
+    <td><%= person.firstname %></td>
+    <td><%= person.lastname %></td>
+    <td><%= person.phone %></td>
+    <td><%= person.email %></td>
+  </tr>
+<% end %>
+</table>

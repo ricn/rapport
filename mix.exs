@@ -34,7 +34,8 @@ defmodule Rapport.Mixfile do
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
       {:excoveralls, "~> 0.7", only: [:dev, :test]},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:inch_ex, only: :docs}
+      {:inch_ex, "0.5.6", only: :docs},
+      {:faker, "0.9.0", only: :test}
     ]
   end
 

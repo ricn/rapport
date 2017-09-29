@@ -282,5 +282,30 @@ defmodule RapportTest do
       file = Path.join([System.cwd, "examples", "custom_fonts_and_styles.html"])
       File.write!(file, html_report)
     end
+
+    test "two page table" do
+      report_template = Path.join(__DIR__, "templates/table_report.html.eex")
+      page_template = Path.join(__DIR__, "templates/table_page.html.eex")
+
+      all_people =
+        Enum.map(1..60, fn(num) ->
+          %{
+            num: num,
+            firstname: Faker.Name.first_name(),
+            lastname: Faker.Name.last_name(),
+            phone: Faker.Phone.EnUs.phone(),
+            email: Faker.Internet.email()
+          }
+        end)
+      number_of_people_per_page = 35
+      report = Rapport.new(report_template)
+      html_report =
+        Enum.chunk_every(all_people, number_of_people_per_page)
+        |> Enum.reduce(report, fn(chunk, acc) -> Rapport.add_page(acc, page_template, %{people: chunk}) end)
+        |> Rapport.generate_html
+
+      file = Path.join([System.cwd, "examples", "two_page_table.html"])
+      File.write!(file, html_report)
+    end
   end
 end
