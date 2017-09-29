@@ -1,0 +1,36 @@
+<link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'Special Elite', cursive;
+    font-size: 1em;
+  }
+
+  h1 {
+    font-size: 3em;
+  }
+
+  h1#cover-page-title {
+    margin-left: auto;
+    margin-right: auto;
+    width: 22em;
+    margin-top: 0;
+  }
+
+  #cover-page-table {
+    font-size: 2em;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 2px;
+    text-align: center;
+    border: 1px solid;
+  }
+
+  .top-secret img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+</style>

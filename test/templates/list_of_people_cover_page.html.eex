@@ -1,0 +1,20 @@
+<div class="top-secret">
+	<img src="https://www.wpclipart.com/signs_symbol/words/stamps/top_secret_stamp.png">
+</div>
+
+<h1 id="cover-page-title">All employees at Top Secret Company Inc</h1>
+
+<table id="cover-page-table">
+  <tr>
+    <th>City</th>
+    <th>Number of employees</th>
+    <th>Number of pages</th>
+  </tr>
+  <%= for row <- @cover_page_data do %>
+    <tr>
+      <td><%= row.city %></td>
+      <td><%= row.num_of_employees %></td>
+      <td><%= row.num_of_pages %></td>
+    </tr>
+  <% end %>
+</table>

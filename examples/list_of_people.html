@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Invoice #1234</title>
+  <title>Report</title>
   <style>/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}/*# sourceMappingURL=normalize.min.css.map */
 </style>
   <style>/*paper.css*/
@@ -71,178 +71,117 @@ body.ledger.landscape       .sheet { width: 432mm; height: 279mm }
   body.ledger.landscape       { width: 432mm }
 }
 </style>
-  <style>@page {size: A4}</style>
-  <style>
-.invoice-box{
-    font-size:16px;
-    line-height:24px;
-    font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-    color:#555;
-}
+  <style>@page {size: A4 landscape}</style>
+  <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
 
-.invoice-box table{
-    width:100%;
-    line-height:inherit;
-    text-align:left;
-}
+<style>
+  body {
+    font-family: 'Special Elite', cursive;
+    font-size: 1em;
+  }
 
-.invoice-box table td{
-    padding:5px;
-    vertical-align:top;
-}
+  h1 {
+    font-size: 3em;
+  }
 
-.invoice-box table tr td:nth-child(2){
-    text-align:right;
-}
+  h1#cover-page-title {
+    margin-left: auto;
+    margin-right: auto;
+    width: 22em;
+    margin-top: 0;
+  }
 
-.invoice-box table tr.top table td{
-    padding-bottom:20px;
-}
+  #cover-page-table {
+    font-size: 2em;
+    width: 100%;
+  }
 
-.invoice-box table tr.top table td.title{
-    font-size:45px;
-    line-height:45px;
-    color:#333;
-}
+  th, td {
+    padding: 2px;
+    text-align: center;
+    border: 1px solid;
+  }
 
-.invoice-box table tr.information table td{
-    padding-bottom:40px;
-}
-
-.invoice-box table tr.heading td{
-    background:#eee;
-    border-bottom:1px solid #ddd;
-    font-weight:bold;
-}
-
-.invoice-box table tr.details td{
-    padding-bottom:20px;
-}
-
-.invoice-box table tr.item td{
-    border-bottom:1px solid #eee;
-}
-
-.invoice-box table tr.item.last td{
-    border-bottom:none;
-}
-
-.invoice-box table tr.total td:nth-child(2){
-    border-top:2px solid #eee;
-    font-weight:bold;
-}
-
-@media only screen and (max-width: 600px) {
-    .invoice-box table tr.top table td{
-        width:100%;
-        display:block;
-        text-align:center;
-    }
-
-    .invoice-box table tr.information table td{
-        width:100%;
-        display:block;
-        text-align:center;
-    }
-}
+  .top-secret img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
 </style>
 
 </head>
-<body class="A4">
+<body class="A4 landscape">
   <div class="sheet padding-10mm">
-  <div class="invoice-box">
-    <table cellpadding="0" cellspacing="0">
-        <tr class="top">
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <td class="title">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Acme-corp.png" style="width:60%; max-width:150px;">
-                        </td>
-                        <td>
-                            Invoice #: 1234<br>
-                            Created: 2017-09-29<br>
-                            Due: 2017-10-29
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
-        <tr class="information">
-            <td colspan="2">
-                <table>
-                    <tr>
-                        <td>
-                            Acme, Inc<br>
-                            12345 Sunny Road<br>
-                            Sunnyville, TX 12345
-                        </td>
-
-                        <td>
-                            Customer, Inc<br>
-                            54321 Cloudy Road<br>
-                            Cloudlyville, NY 54321
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-
-        <tr class="heading">
-            <td>
-                Payment Method
-            </td>
-
-            <td>
-                Check #
-            </td>
-        </tr>
-
-        <tr class="details">
-            <td>
-                Check
-            </td>
-
-            <td>
-                1001
-            </td>
-        </tr>
-
-        <tr class="heading">
-            <td>
-                Item
-            </td>
-
-            <td>
-                Price
-            </td>
-        </tr>
-
-        
-          <tr class="item">
-              <td>Website design</td>
-              <td>$300</td>
-          </tr>
-        
-          <tr class="item">
-              <td>Hosting (3 months)</td>
-              <td>$75</td>
-          </tr>
-        
-          <tr class="item">
-              <td>Domain name (1 year)</td>
-              <td>$10</td>
-          </tr>
-        
-
-        <tr class="total">
-            <td></td>
-            <td>Total: $385
-            </td>
-        </tr>
-    </table>
+  <div class="top-secret">
+	<img src="https://www.wpclipart.com/signs_symbol/words/stamps/top_secret_stamp.png">
 </div>
+
+<h1 id="cover-page-title">All employees at Top Secret Company Inc</h1>
+
+<table id="cover-page-table">
+  <tr>
+    <th>City</th>
+    <th>Number of employees</th>
+    <th>Number of pages</th>
+  </tr>
+  
+    <tr>
+      <td>New York</td>
+      <td>74</td>
+      <td>4</td>
+    </tr>
+  
+    <tr>
+      <td>San Francisco</td>
+      <td>77</td>
+      <td>4</td>
+    </tr>
+  
+    <tr>
+      <td>Los Angeles</td>
+      <td>91</td>
+      <td>5</td>
+    </tr>
+  
+    <tr>
+      <td>Miami</td>
+      <td>52</td>
+      <td>3</td>
+    </tr>
+  
+    <tr>
+      <td>Chicago</td>
+      <td>55</td>
+      <td>3</td>
+    </tr>
+  
+    <tr>
+      <td>Boston</td>
+      <td>52</td>
+      <td>3</td>
+    </tr>
+  
+    <tr>
+      <td>Detroit</td>
+      <td>50</td>
+      <td>3</td>
+    </tr>
+  
+    <tr>
+      <td>Houston</td>
+      <td>49</td>
+      <td>3</td>
+    </tr>
+  
+</table>
+
+</div>
+<div class="sheet padding-10mm">
+  <div class="top-secret">
+	<img src="https://www.wpclipart.com/signs_symbol/words/stamps/top_secret_stamp.png">
+</div>
+
+<h1>New York</h1>
 
 </div>
 

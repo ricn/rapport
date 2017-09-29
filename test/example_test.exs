@@ -59,7 +59,7 @@ defmodule ExampleTest do
     File.write!(file, html_report)
   end
 
-  test "invoice" do
+  test "invoice.html" do
     report_template = Path.join(__DIR__, "templates/invoice_report.html.eex")
     page_template = Path.join(__DIR__, "templates/invoice_page.html.eex")
 
@@ -72,7 +72,7 @@ defmodule ExampleTest do
       your_company_address_line_2: "Sunnyville, TX 12345",
       customer_name: "Customer, Inc",
       customer_address_line_1: "54321 Cloudy Road",
-      customer_address_line_2: "Cloudyville, NY 54321",
+      customer_address_line_2: "Cloudlyville, NY 54321",
       payment_method: %{method: "Check", number: 1001},
       items: [
         %{name: "Website design", price: 300},
@@ -90,6 +90,61 @@ defmodule ExampleTest do
 
     file = Path.join([System.cwd, "examples", "invoice.html"])
     File.write!(file, html_report)
+  end
+
+  test "list_of_people.html" do
+    report_template = Path.join(__DIR__, "templates/list_of_people_report.html.eex")
+    cover_page_template = Path.join(__DIR__, "templates/list_of_people_cover_page.html.eex")
+    people_page_template = Path.join(__DIR__, "templates/list_of_people_page.html.eex")
+
+    eight_cities = ["New York", "San Francisco", "Los Angeles", "Miami", "Chicago", "Boston", "Detroit", "Houston"]
+
+    all_people =
+      Enum.map(1..500, fn(num) ->
+        %{
+          employee_no: 10000 + num,
+          firstname: Faker.Name.first_name(),
+          lastname: Faker.Name.last_name(),
+          phone: Faker.Phone.EnUs.phone(),
+          email: Faker.Internet.email(),
+          city: Enum.at(eight_cities, Enum.random(0..7))
+        }
+      end)
+
+    employees_per_page = 20
+
+    cover_page_data =
+      Enum.map(eight_cities, fn(city) ->
+        num_of_employees = count_num_of_employees_for_city(all_people, city)
+        num_of_pages = round(Float.ceil(num_of_employees / employees_per_page))
+        %{
+          city: city,
+          num_of_employees: num_of_employees,
+          num_of_pages: num_of_pages
+        }
+      end)
+
+    html_report =
+      Rapport.new(report_template)
+      |> Rapport.set_rotation(:landscape)
+      |> Rapport.add_page(cover_page_template, %{cover_page_data: cover_page_data})
+      |> Rapport.add_page(people_page_template, %{})
+      |> Rapport.generate_html
+
+    file = Path.join([System.cwd, "examples", "list_of_people.html"])
+    File.write!(file, html_report)
+
+    # Cover page with index
+    # Page numbering per city
+    # Image in header
+    # Landscape
+    # Group by City
+    # People
+    # Faker.Address.city
+  end
+
+  defp count_num_of_employees_for_city(all_people, city) do
+    all_people |> Enum.filter(fn(p) -> p.city == city end) |> Enum.count
   end
 
 end
