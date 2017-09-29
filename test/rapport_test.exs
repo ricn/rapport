@@ -307,5 +307,38 @@ defmodule RapportTest do
       file = Path.join([System.cwd, "examples", "two_page_table.html"])
       File.write!(file, html_report)
     end
+
+    test "invoice" do
+      report_template = Path.join(__DIR__, "templates/invoice_report.html.eex")
+      page_template = Path.join(__DIR__, "templates/invoice_page.html.eex")
+
+      invoice = %{
+        number: 1234,
+        created_at: "2017-09-29",
+        due_at: "2017-10-29",
+        your_company_name: "Acme, Inc",
+        your_company_address_line_1: "12345 Sunny Road",
+        your_company_address_line_2: "Sunnyville, TX 12345",
+        customer_name: "Customer, Inc",
+        customer_address_line_1: "54321 Cloudy Road",
+        customer_address_line_2: "Cloudyville, NY 54321",
+        payment_method: %{method: "Check", number: 1001},
+        items: [
+          %{name: "Website design", price: 300},
+          %{name: "Hosting (3 months)", price: 75},
+          %{name: "Domain name (1 year)", price: 10}
+        ],
+        total_price: 385
+      }
+
+      html_report =
+        Rapport.new(report_template)
+        |> Rapport.set_title("Invoice #123")
+        |> Rapport.add_page(page_template, invoice)
+        |> Rapport.generate_html
+
+      file = Path.join([System.cwd, "examples", "invoice.html"])
+      File.write!(file, html_report)
+    end
   end
 end

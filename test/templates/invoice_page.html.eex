@@ -1,0 +1,83 @@
+<div class="invoice-box">
+    <table cellpadding="0" cellspacing="0">
+        <tr class="top">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td class="title">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Acme-corp.png" style="width:60%; max-width:150px;">
+                        </td>
+                        <td>
+                            Invoice #: <%= @number %><br>
+                            Created: <%= @created_at %><br>
+                            Due: <%= @due_at %>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="information">
+            <td colspan="2">
+                <table>
+                    <tr>
+                        <td>
+                            <%= @your_company_name %><br>
+                            <%= @your_company_address_line_1 %><br>
+                            <%= @your_company_address_line_2 %>
+                        </td>
+
+                        <td>
+                            <%= @customer_name %><br>
+                            <%= @customer_address_line_1 %><br>
+                            <%= @customer_address_line_2 %>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>
+                Payment Method
+            </td>
+
+            <td>
+                Check #
+            </td>
+        </tr>
+
+        <tr class="details">
+            <td>
+                <%= @payment_method.method %>
+            </td>
+
+            <td>
+                <%= @payment_method.number %>
+            </td>
+        </tr>
+
+        <tr class="heading">
+            <td>
+                Item
+            </td>
+
+            <td>
+                Price
+            </td>
+        </tr>
+
+        <%= for item <- @items do %>
+          <tr class="item">
+              <td><%= item.name %></td>
+              <td>$<%= item.price %></td>
+          </tr>
+        <% end %>
+
+        <tr class="total">
+            <td></td>
+            <td>Total: $<%= @total_price %>
+            </td>
+        </tr>
+    </table>
+</div>
