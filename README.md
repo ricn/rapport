@@ -32,7 +32,9 @@ html_report =
 
 The snippet above generates a report containing only one page with a heading that says "Hello world!".
 
-## Add styling & custom fonts to a report
+[See example here](https://cdn.rawgit.com/ricn/rapport/master/examples/hello.html)
+
+## Add styling and custom fonts to a report
 
 ```elixir
 report_template = """
@@ -42,7 +44,7 @@ report_template = """
     font-family: 'Tangerine', serif;
     font-size: 48px;
     text-shadow: 4px 4px 4px #aaa;
-    margin: 0
+    margin: 0;
   }
 </style>
 """
@@ -53,7 +55,9 @@ html_report =
   |> Rapport.generate_html
 ```
 
-## Table and page breaks
+The report template is injected in the HTML head section so you can bring in things like styles, fonts and JavaScript.
+
+[See example here](https://cdn.rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
 
 ## Credits
 
