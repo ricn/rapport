@@ -14,7 +14,7 @@ defmodule Rapport do
   @doc """
   Creates a new report.
 
-  Returns a Report struct.
+  Returns a `Rapport.Report` struct.
 
   ## Options
 
@@ -38,7 +38,7 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - A report struct that you want to add the page to.
+    * `:report` - A `Rapport.Report` struct that you want to add the page to.
     * `:page_template` - An EEx template for the page
     * `:fields` - A map with fields that must be assigned to the EEx template
   """
@@ -50,11 +50,11 @@ defmodule Rapport do
   end
 
   @doc """
-  Sets the title of the report. This is the title of the generated html report.
+  Sets the title for a report. This is the title of the generated html report.
 
   ## Options
 
-    * `:report` - The report you want to set the title for.
+    * `:report` - The `Rapport.Report` you want to set the title for.
     * `:title` - The new title
   """
 
@@ -69,8 +69,8 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The report that you want set the paper size for.
-    * `:paper_size` - The paper size
+    * `:report` - The `Rapport.Report` that you want set the paper size for
+    * `:paper_size` - The paper size.
   """
 
   def set_paper_size(%Report{} = report, paper_size) do
@@ -87,8 +87,8 @@ defmodule Rapport do
 
   ## Options
 
-    *  `:report` - The report that you want set the rotation for.
-    *  `:rotation` - The rotation
+    *  `:report` - The `Rapport.Report` that you want set the rotation for
+    *  `:rotation` - The rotation.
   """
 
   def set_rotation(%Report{} = report, rotation) do
@@ -103,8 +103,8 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The report that you want set the padding for.
-    * `:rotation` - The padding
+    * `:report` - The `Rapport.Report` that you want set the padding for
+    * `:rotation` - The padding.
   """
 
   def set_padding(%Report{} = report, padding) when is_integer(padding) do
@@ -117,7 +117,7 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The report that you want to generate to HTML.
+    * `:report` - The `Rapport.Report` that you want to generate to HTML.
   """
 
   def generate_html(%Report{} = report) do
