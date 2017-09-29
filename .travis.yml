@@ -5,4 +5,9 @@ notifications:
   recipients:
     - ricn@rny.io
 script:
-  - "MIX_ENV=test mix do deps.get, compile, coveralls.travis"
+  - "MIX_ENV=test mix do deps.get, compile"
+after_script:
+  - MIX_ENV=docs mix deps.get
+  - MIX_ENV=docs mix inch.report
+after_success:
+- "mix compile && mix coveralls.travis"
