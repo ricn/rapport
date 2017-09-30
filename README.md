@@ -32,7 +32,7 @@ html_report =
 
 The snippet above generates a report containing only one page with a heading that says "Hello world!".
 
-[See example here](https://cdn.rawgit.com/ricn/rapport/master/examples/hello.html)
+[See example here](https://rawgit.com/ricn/rapport/master/examples/hello.html)
 
 ## Add styling and custom fonts to a report
 
@@ -57,11 +57,11 @@ html_report =
 
 The report template is injected in the HTML head section so you can bring in things like styles, fonts and JavaScript.
 
-[See example here](https://cdn.rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
+[See example here](https://rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
 
 ## More advanced examples
-  * [Invoice example](https://cdn.rawgit.com/ricn/rapport/master/examples/invoice.html)
-  * [List of people with cover page](https://cdn.rawgit.com/ricn/rapport/master/examples/list_of_people.html)
+  * [Invoice example](https://rawgit.com/ricn/rapport/master/examples/invoice.html)
+  * [List of people with cover page](https://rawgit.com/ricn/rapport/master/examples/list_of_people.html)
   * More examples are coming...
 
 The examples are generated from `example_test.exs` in the test folder if you want to see how they are created.
