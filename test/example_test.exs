@@ -93,12 +93,18 @@ defmodule ExampleTest do
   end
 
   test "list_of_people.html" do
-    report_template = Path.join(__DIR__, "templates/list_of_people_report.html.eex")
-    cover_page_template = Path.join(__DIR__, "templates/list_of_people_cover_page.html.eex")
-    people_page_template = Path.join(__DIR__, "templates/list_of_people_page.html.eex")
+    # This is a pretty advanced report that showcases how complex reports that are possible to create with
+    # Rapport. The report starts with a cover page that show a summary of the rest of the report. The cover page
+    # shows the city, how many people that belongs to the city and how many pages that is needed to list them.
+    # The rest of the report lists all the people grouped by city and displays 12 people per page.
 
-    eight_cities = ["New York", "San Francisco", "Los Angeles", "Miami", "Chicago", "Boston", "Detroit", "Houston"]
+    report_template = File.read!(Path.join(__DIR__, "templates/list_of_people_report.html.eex"))
+    cover_page_template = File.read!(Path.join(__DIR__, "templates/list_of_people_cover_page.html.eex"))
+    people_page_template = File.read!(Path.join(__DIR__, "templates/list_of_people_page.html.eex"))
 
+    cities = ["New York", "San Francisco", "Los Angeles", "Miami", "Chicago", "Boston", "Detroit", "Houston"]
+
+    # Generates 500 random people and sorts them by city
     all_people =
       Enum.map(1..500, fn(num) ->
         %{
@@ -107,40 +113,49 @@ defmodule ExampleTest do
           lastname: Faker.Name.last_name(),
           phone: Faker.Phone.EnUs.phone(),
           email: Faker.Internet.email(),
-          city: Enum.at(eight_cities, Enum.random(0..7))
+          city: Enum.at(cities, Enum.random(0..7))
         }
       end)
+      |> Enum.sort(&(&1.city <= &2.city))
 
-    employees_per_page = 20
+    people_per_page = 12
 
+    # Creates the data for the cover page and sorts the result by city
     cover_page_data =
-      Enum.map(eight_cities, fn(city) ->
+      Enum.map(cities, fn(city) ->
         num_of_employees = count_num_of_employees_for_city(all_people, city)
-        num_of_pages = round(Float.ceil(num_of_employees / employees_per_page))
+        num_of_pages = round(Float.ceil(num_of_employees / people_per_page))
         %{
           city: city,
           num_of_employees: num_of_employees,
           num_of_pages: num_of_pages
         }
       end)
+      |> Enum.sort(&(&1.city <= &2.city))
 
-    html_report =
-      Rapport.new(report_template)
-      |> Rapport.set_rotation(:landscape)
-      |> Rapport.add_page(cover_page_template, %{cover_page_data: cover_page_data})
-      |> Rapport.add_page(people_page_template, %{})
-      |> Rapport.generate_html
+    # Creates pages with all people that is chunked by city and all the people per city
+    # is chunked every time we have 12 people
+    pages_with_people =
+      Enum.chunk_by(all_people, fn(p) -> p.city end)
+      |> Enum.flat_map(fn(people_per_city) ->
+        people_per_city
+        |> Enum.chunk_every(people_per_page)
+        |> Enum.map(fn(people) ->
+          %Rapport.Page{template: people_page_template, fields: %{people: people}}
+        end)
+      end)
+      |> Enum.reverse
+
+      # Creates an HTML report in landscape mode
+      html_report =
+        Rapport.new(report_template)
+        |> Rapport.set_rotation(:landscape)
+        |> Rapport.add_page(cover_page_template, %{cover_page_data: cover_page_data})
+        |> Rapport.add_pages(pages_with_people)
+        |> Rapport.generate_html
 
     file = Path.join([System.cwd, "examples", "list_of_people.html"])
     File.write!(file, html_report)
-
-    # Cover page with index
-    # Page numbering per city
-    # Image in header
-    # Landscape
-    # Group by City
-    # People
-    # Faker.Address.city
   end
 
   defp count_num_of_employees_for_city(all_people, city) do

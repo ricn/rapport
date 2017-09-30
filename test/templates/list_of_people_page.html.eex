@@ -2,4 +2,23 @@
 	<img src="https://www.wpclipart.com/signs_symbol/words/stamps/top_secret_stamp.png">
 </div>
 
-<h1>New York</h1>
+<h2><%= List.first(@people).city %></h2>
+
+<table class="people-table">
+  <tr>
+    <th>#</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Phone</th>
+    <th>E-mail</th>
+  </tr>
+<%= for person <- @people do %>
+  <tr>
+    <td><%= person.employee_no %></td>
+    <td><%= person.firstname %></td>
+    <td><%= person.lastname %></td>
+    <td><%= person.phone %></td>
+    <td><%= person.email %></td>
+  </tr>
+<% end %>
+</table>

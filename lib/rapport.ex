@@ -59,6 +59,16 @@ defmodule Rapport do
     Map.put(report, :pages, [new_page | report.pages])
   end
 
+  # TODO: Add docs n tests
+  def add_page(%Report{} = report, %Page{} = page) do
+    Map.put(report, :pages, [page | report.pages])
+  end
+
+  # TODO: Add docs n tests
+  def add_pages(%Report{} = report, pages) do
+    Map.put(report, :pages, pages ++ report.pages)    
+  end
+
   @doc """
   Sets the title for a report. This is the title of the generated html report.
 

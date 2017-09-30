@@ -17,8 +17,17 @@
     margin-top: 0;
   }
 
+  h2 {
+    font-size: 2em;
+  }
+
   #cover-page-table {
     font-size: 2em;
+    width: 100%;
+  }
+
+  .people-table {
+    font-size: 1.2em;
     width: 100%;
   }
 
