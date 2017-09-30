@@ -59,14 +59,27 @@ defmodule Rapport do
     Map.put(report, :pages, [new_page | report.pages])
   end
 
-  # TODO: Add docs n tests
+  @doc """
+  Adds a new page to a report.
+
+  ## Options
+
+    * `:report` - A `Rapport.Report` struct that you want to add the page to.
+    * `:page` - A `Rapport.Page` struct
+  """
   def add_page(%Report{} = report, %Page{} = page) do
     Map.put(report, :pages, [page | report.pages])
   end
 
-  # TODO: Add docs n tests
+  @doc """
+  Adds a list of pages to a report.
+
+  ## Options
+    * `:report` - A `Rapport.Report` struct that you want to add the page to.
+    * `:pages` - A list with `Rapport.Page` structs
+  """
   def add_pages(%Report{} = report, pages) do
-    Map.put(report, :pages, pages ++ report.pages)    
+    Map.put(report, :pages, pages ++ report.pages)
   end
 
   @doc """
