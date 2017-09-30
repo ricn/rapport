@@ -60,8 +60,8 @@ The report template is injected in the HTML head section so you can bring in thi
 [See example here](https://cdn.rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
 
 ## More advanced examples
-  * [Invoice example] (https://cdn.rawgit.com/ricn/rapport/master/examples/invoice.html)
-  * [List of people with cover page] (https://cdn.rawgit.com/ricn/rapport/master/examples/list_of_people.html)
+  * [Invoice example](https://cdn.rawgit.com/ricn/rapport/master/examples/invoice.html)
+  * [List of people with cover page](https://cdn.rawgit.com/ricn/rapport/master/examples/list_of_people.html)
   * More examples are coming...
 
 The examples are generated from `example_test.exs` in the test folder if you want to see how they are created.
