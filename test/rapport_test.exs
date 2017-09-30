@@ -4,10 +4,10 @@ defmodule RapportTest do
 
   alias Rapport.Page
 
-  @hello_template Path.join(__DIR__, "templates/hello.html.eex")
-  @two_fields_template Path.join(__DIR__, "templates/two_fields.html.eex")
-  @list_template Path.join(__DIR__, "templates/list.html.eex")
-  @list_map_template Path.join(__DIR__, "templates/list_map.html.eex")
+  @hello_template File.read!(Path.join(__DIR__, "templates/hello.html.eex"))
+  @two_fields_template File.read!(Path.join(__DIR__, "templates/two_fields.html.eex"))
+  @list_template File.read!(Path.join(__DIR__, "templates/list.html.eex"))
+  @list_map_template File.read!(Path.join(__DIR__, "templates/list_map.html.eex"))
 
   describe "new" do
 

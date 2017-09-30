@@ -32,13 +32,12 @@ defmodule Rapport do
   """
 
   def new(template \\ "") do
-    report_template = template_content(template)
     %Report{
       title: "Report",
       paper_size: :A4,
       rotation: :portrait,
       pages: [],
-      template: report_template,
+      template: template,
       padding: 10
     }
   end
@@ -53,9 +52,8 @@ defmodule Rapport do
     * `:fields` - A map with fields that must be assigned to the EEx template
   """
 
-  def add_page(%Report{} = report, page_template, %{} = fields) do
-    template = template_content(page_template)
-    new_page = %Page{template: template, fields: fields}
+  def add_page(%Report{} = report, page_template, %{} = fields) when is_binary(page_template) do
+    new_page = %Page{template: page_template, fields: fields}
     Map.put(report, :pages, [new_page | report.pages])
   end
 
@@ -204,9 +202,5 @@ defmodule Rapport do
 
   defp validate_list(what, list, msg) do
     if what not in list, do: raise ArgumentError, message: msg
-  end
-
-  defp template_content(template) do
-    if (File.exists?(template)), do: File.read!(template), else: template
   end
 end
