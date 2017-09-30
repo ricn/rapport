@@ -123,7 +123,7 @@ defmodule ExampleTest do
     # Creates the data for the cover page and sorts the result by city
     cover_page_data =
       Enum.map(cities, fn(city) ->
-        num_of_employees = count_num_of_employees_for_city(all_people, city)
+        num_of_employees = all_people |> Enum.filter(fn(p) -> p.city == city end) |> Enum.count
         num_of_pages = round(Float.ceil(num_of_employees / people_per_page))
         %{
           city: city,
@@ -157,9 +157,4 @@ defmodule ExampleTest do
     file = Path.join([System.cwd, "examples", "list_of_people.html"])
     File.write!(file, html_report)
   end
-
-  defp count_num_of_employees_for_city(all_people, city) do
-    all_people |> Enum.filter(fn(p) -> p.city == city end) |> Enum.count
-  end
-
 end
