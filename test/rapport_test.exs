@@ -2,6 +2,8 @@ defmodule RapportTest do
   use ExUnit.Case
   doctest Rapport
 
+  alias Rapport.Page
+
   @hello_template Path.join(__DIR__, "templates/hello.html.eex")
   @two_fields_template Path.join(__DIR__, "templates/two_fields.html.eex")
   @list_template Path.join(__DIR__, "templates/list.html.eex")
@@ -58,7 +60,7 @@ defmodule RapportTest do
   end
 
   describe "add_page" do
-    test "add one page" do
+    test "add one page with template and fields" do
       report =
         Rapport.new
         |> Rapport.add_page(@hello_template, %{hello: "Hello world"})
@@ -67,11 +69,29 @@ defmodule RapportTest do
       assert List.first(report.pages).fields.hello == "Hello world"
     end
 
-    test "add two pages" do
+    test "add two pages with template and fields" do
       report =
         Rapport.new
         |> Rapport.add_page(@hello_template, %{hello: "One"})
         |> Rapport.add_page(@hello_template, %{hello: "Two"})
+
+      assert length(report.pages) == 2
+    end
+
+    test "add one page with a Page struct" do
+      report =
+        Rapport.new
+        |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "Hello world"}})
+
+      assert length(report.pages) == 1
+      assert List.first(report.pages).fields.hello == "Hello world"
+    end
+
+    test "add two pages using Page structs" do
+      report =
+        Rapport.new
+        |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "One"}})
+        |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "Two"}})
 
       assert length(report.pages) == 2
     end
