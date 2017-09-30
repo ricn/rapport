@@ -78,7 +78,7 @@ defmodule Rapport do
     * `:report` - A `Rapport.Report` struct that you want to add the page to.
     * `:pages` - A list with `Rapport.Page` structs
   """
-  def add_pages(%Report{} = report, pages) do
+  def add_pages(%Report{} = report, pages) when is_list(pages) do
     Map.put(report, :pages, pages ++ report.pages)
   end
 

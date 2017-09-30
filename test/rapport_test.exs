@@ -97,6 +97,21 @@ defmodule RapportTest do
     end
   end
 
+  describe "add_pages" do
+    test "add two pages" do
+      list_of_pages = [
+        %Page{template: @hello_template, fields: %{hello: "One"}},
+        %Page{template: @hello_template, fields: %{hello: "Two"}}
+      ]
+
+      report =
+        Rapport.new
+        |> Rapport.add_pages(list_of_pages)
+
+      assert length(report.pages) == 2
+    end
+  end
+
   describe "generate_html" do
     test "must include normalize & paper css" do
       html_report =
