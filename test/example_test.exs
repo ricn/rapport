@@ -35,8 +35,8 @@ defmodule ExampleTest do
   end
 
   test "two_page_table.html" do
-    report_template = Path.join(__DIR__, "templates/table_report.html.eex")
-    page_template = Path.join(__DIR__, "templates/table_page.html.eex")
+    report_template = File.read!(Path.join(__DIR__, "templates/table_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "templates/table_page.html.eex"))
 
     all_people =
       Enum.map(1..60, fn(num) ->
@@ -60,8 +60,8 @@ defmodule ExampleTest do
   end
 
   test "invoice.html" do
-    report_template = Path.join(__DIR__, "templates/invoice_report.html.eex")
-    page_template = Path.join(__DIR__, "templates/invoice_page.html.eex")
+    report_template = File.read!(Path.join(__DIR__, "templates/invoice_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "templates/invoice_page.html.eex"))
 
     invoice = %{
       number: 1234,
