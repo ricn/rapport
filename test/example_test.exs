@@ -157,4 +157,27 @@ defmodule ExampleTest do
     file = Path.join([System.cwd, "examples", "list_of_people.html"])
     File.write!(file, html_report)
   end
+
+  test "page_numbering.html" do
+    report_template = File.read!(Path.join(__DIR__, "templates/page_numbering_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "templates/page_numbering_page.html.eex"))
+
+    num_of_pages = 3
+
+    pages =
+      Enum.map(1..num_of_pages, fn(page_number) ->
+        random_text = Enum.map(1..6, fn(_) -> Faker.Lorem.paragraphs end) |> Enum.join
+        fields = %{text: random_text, page_number: page_number, num_of_pages: num_of_pages}
+        %Rapport.Page{template: page_template, fields: fields}
+      end)
+      |> Enum.reverse
+
+    html_report =
+      Rapport.new(report_template)
+      |> Rapport.add_pages(pages)
+      |> Rapport.generate_html
+
+    file = Path.join([System.cwd, "examples", "page_numbering.html"])
+    File.write!(file, html_report)
+  end
 end

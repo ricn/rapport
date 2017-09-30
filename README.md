@@ -59,8 +59,9 @@ The report template is injected in the HTML head section so you can bring in thi
 
 [See example here](https://rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
 
-## More advanced examples
+## More examples
   * [Invoice example](https://rawgit.com/ricn/rapport/master/examples/invoice.html)
+  * [Page numbering](https://rawgit.com/ricn/rapport/master/examples/page_numbering.html)
   * [List of people with cover page](https://rawgit.com/ricn/rapport/master/examples/list_of_people.html)
   * More examples are coming...
 
