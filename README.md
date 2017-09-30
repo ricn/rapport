@@ -15,7 +15,7 @@ by adding `rapport` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:rapport, "~> 0.3.0"}
+    {:rapport, "~> 0.4.0"}
   ]
 end
 ```
@@ -58,6 +58,13 @@ html_report =
 The report template is injected in the HTML head section so you can bring in things like styles, fonts and JavaScript.
 
 [See example here](https://cdn.rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
+
+## More advanced examples
+  * [Invoice example] (https://cdn.rawgit.com/ricn/rapport/master/examples/invoice.html)
+  * [List of people with cover page] (https://cdn.rawgit.com/ricn/rapport/master/examples/list_of_people.html)
+  * More examples are coming...
+
+The examples are generated from `example_test.exs` in the test folder if you want to see how they are created.
 
 ## Credits
 
