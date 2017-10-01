@@ -45,7 +45,7 @@ If you want to see how the examples has been created, you can look at the `examp
 
 ## Credits
 
-The following people have contributed ideas, documentation, or code to Librex:
+The following people have contributed ideas, documentation, or code to Rapport:
 
 * Richard Nyström
 
