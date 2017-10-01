@@ -28,7 +28,7 @@ defmodule Rapport do
 
   ## Options
 
-    * `:template` - An optional EEx template for the report.
+    * `template` - An optional EEx template for the report.
   """
 
   def new(template \\ "") do
@@ -47,9 +47,9 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - A `Rapport.Report` struct that you want to add the page to.
-    * `:page_template` - An EEx template for the page
-    * `:fields` - A map with fields that must be assigned to the EEx template
+    * `report` - A `Rapport.Report` struct that you want to add the page to.
+    * `page_template` - An EEx template for the page
+    * `fields` - A map with fields that must be assigned to the EEx template
   """
 
   def add_page(%Report{} = report, page_template, %{} = fields) when is_binary(page_template) do
@@ -62,8 +62,8 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - A `Rapport.Report` struct that you want to add the page to.
-    * `:page` - A `Rapport.Page` struct
+    * `report` - A `Rapport.Report` struct that you want to add the page to.
+    * `page` - A `Rapport.Page` struct
   """
   def add_page(%Report{} = report, %Page{} = page) do
     Map.put(report, :pages, [page | report.pages])
@@ -73,8 +73,8 @@ defmodule Rapport do
   Adds a list of pages to a report.
 
   ## Options
-    * `:report` - A `Rapport.Report` struct that you want to add the page to.
-    * `:pages` - A list with `Rapport.Page` structs
+    * `report` - A `Rapport.Report` struct that you want to add the page to.
+    * `pages` - A list with `Rapport.Page` structs
   """
   def add_pages(%Report{} = report, pages) when is_list(pages) do
     Map.put(report, :pages, pages ++ report.pages)
@@ -85,8 +85,8 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The `Rapport.Report` you want to set the title for.
-    * `:title` - The new title
+    * `report` - The `Rapport.Report` you want to set the title for.
+    * `title` - The new title
   """
 
   def set_title(%Report{} = report, title) when is_binary(title) do
@@ -102,8 +102,8 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The `Rapport.Report` that you want set the paper size for
-    * `:paper_size` - The paper size.
+    * `report` - The `Rapport.Report` that you want set the paper size for
+    * `paper_size` - The paper size.
   """
 
   def set_paper_size(%Report{} = report, paper_size) do
@@ -121,8 +121,8 @@ defmodule Rapport do
 
   ## Options
 
-    *  `:report` - The `Rapport.Report` that you want set the rotation for
-    *  `:rotation` - The rotation.
+    *  `report` - The `Rapport.Report` that you want set the rotation for
+    *  `rotation` - The rotation.
   """
 
   def set_rotation(%Report{} = report, rotation) do
@@ -138,8 +138,8 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The `Rapport.Report` that you want set the padding for
-    * `:rotation` - The padding.
+    * `report` - The `Rapport.Report` that you want set the padding for
+    * `rotation` - The padding.
   """
 
   def set_padding(%Report{} = report, padding) when is_integer(padding) do
@@ -152,7 +152,7 @@ defmodule Rapport do
 
   ## Options
 
-    * `:report` - The `Rapport.Report` that you want to generate to HTML.
+    * `report` - The `Rapport.Report` that you want to generate to HTML.
   """
 
   def generate_html(%Report{} = report) do
