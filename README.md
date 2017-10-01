@@ -15,7 +15,7 @@ by adding `rapport` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:rapport, "~> 0.4.0"}
+    {:rapport, "~> 0.4"}
   ]
 end
 ```
@@ -34,38 +34,14 @@ The snippet above generates a report containing only one page with a heading tha
 
 [See example here](https://rawgit.com/ricn/rapport/master/examples/hello.html)
 
-## Add styling and custom fonts to a report
-
-```elixir
-report_template = """
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
-<style>
-  h1 {
-    font-family: 'Tangerine', serif;
-    font-size: 48px;
-    text-shadow: 4px 4px 4px #aaa;
-    margin: 0;
-  }
-</style>
-"""
-page_template = "<h1><%= @hello %></h1>"
-html_report =
-  Rapport.new(report_template)
-  |> Rapport.add_page(page_template, %{hello: "Hello world!"})
-  |> Rapport.generate_html
-```
-
-The report template is injected in the HTML head section so you can bring in things like styles, fonts and JavaScript.
-
-[See example here](https://rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
-
 ## More examples
+  * [Custom fonts and styling](https://rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
   * [Invoice example](https://rawgit.com/ricn/rapport/master/examples/invoice.html)
   * [Page numbering](https://rawgit.com/ricn/rapport/master/examples/page_numbering.html)
   * [List of people with cover page](https://rawgit.com/ricn/rapport/master/examples/list_of_people.html)
   * More examples are coming...
 
-The examples are generated from `example_test.exs` in the test folder if you want to see how they are created.
+If you want to see how the examples has been created, you can look at the `example_test.exs` file in the test folder.
 
 ## Credits
 
