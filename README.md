@@ -43,6 +43,30 @@ The snippet above generates a report containing only one page with a heading tha
 
 If you want to see how the examples has been created, you can look at the `example_test.exs` file in the test folder.
 
+## Phoenix integration
+
+It's easy to Integrate Rapport with Phoenix. Just load the template as a module attribute, create the HTML for the report
+and send a response with the generated HTML:
+
+```elixir
+defmodule ReportsWeb.ReportController do
+  use ReportsWeb, :controller
+
+  @page_template File.read!(Path.join(__DIR__, "../templates/report/hello.html.eex"))
+
+  def hello(conn, _params) do
+    html_report =
+       Rapport.new
+       |> Rapport.add_page(@page_template, %{hello: "Hello World!"})
+       |> Rapport.generate_html
+
+       conn
+       |> put_resp_content_type("text/html")
+       |> send_resp(200, html_report)
+  end
+end
+```
+
 ## Credits
 
 The following people have contributed ideas, documentation, or code to Rapport:
