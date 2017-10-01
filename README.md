@@ -36,7 +36,7 @@ The snippet above generates a report containing only one page with a heading tha
 
 ## More examples
   * [Custom fonts and styling](https://rawgit.com/ricn/rapport/master/examples/custom_fonts_and_styles.html)
-  * [Invoice example](https://rawgit.com/ricn/rapport/master/examples/invoice.html)
+  * [Invoice](https://rawgit.com/ricn/rapport/master/examples/invoice.html)
   * [Page numbering](https://rawgit.com/ricn/rapport/master/examples/page_numbering.html)
   * [List of people with cover page](https://rawgit.com/ricn/rapport/master/examples/list_of_people.html)
   * More examples are coming...
