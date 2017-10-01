@@ -1,0 +1,14 @@
+<h1>Chart examples</h1>
+
+<div style="width: 80%; height:80%">
+  <div class="ct-chart .ct-square"></div>
+</div>
+<script type="text/javascript">
+  var data = {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+    series: [
+      [5, 2, 4, 2, 0]
+    ]
+  };
+  new Chartist.Line('.ct-chart', data);
+</script>
