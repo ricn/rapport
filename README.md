@@ -4,7 +4,7 @@ Rapport aims to provide a robust set of modules to generate HTML reports that bo
 
 [![Build Status](https://travis-ci.org/ricn/rapport.png?branch=master)](https://travis-ci.org/ricn/rapport)
 [![Hex.pm](https://img.shields.io/hexpm/v/rapport.svg)](https://hex.pm/packages/rapport)
-[![Inline docs](http://inch-ci.org/github/ricn/rapport.svg?branch=master)](http://inch-ci.org/github/ricn/rapport)
+[![Inline docs](https://inch-ci.org/github/ricn/rapport.svg?branch=master)](http://inch-ci.org/github/ricn/rapport)
 [![Coverage Status](https://coveralls.io/repos/github/ricn/rapport/badge.svg?branch=master)](https://coveralls.io/github/ricn/rapport?branch=master)
 
 ## Installation
