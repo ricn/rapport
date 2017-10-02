@@ -183,19 +183,4 @@ defmodule ExampleTest do
     file = Path.join([System.cwd, "examples", "page_numbering.html"])
     File.write!(file, html_report)
   end
-
-  test "charts.html" do
-    report_template = File.read!(Path.join(__DIR__, "example_templates/charts_report.html.eex"))
-    page_template = File.read!(Path.join(__DIR__, "example_templates/charts_page.html.eex"))
-    labels = Enum.join(["Mon", "Tue", "Wed", "Thu", "Fri"], ",")
-    series = Enum.join([5, 2, 4, 2, 1], ",")
-    html_report =
-      Rapport.new(report_template)
-      |> Rapport.set_rotation(:landscape)
-      |> Rapport.add_page(page_template, %{labels: labels, series: series})
-      |> Rapport.generate_html
-
-    file = Path.join([System.cwd, "examples", "charts.html"])
-    File.write!(file, html_report)
-  end
 end
