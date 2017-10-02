@@ -24,5 +24,12 @@ defmodule ImageTest do
       assert data =~ "image/gif;base64"
       assert data =~ "R0lGODl"
     end
+
+    test "must raise error when image is not an image" do
+      assert_raise ArgumentError, ~r/^Invalid image/, fn ->
+        no_image = File.read!(Path.join(__DIR__, "images/no.image"))
+        Image.as_data(no_image)
+      end
+    end
   end
 end
