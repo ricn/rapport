@@ -62,6 +62,7 @@ defmodule ExampleTest do
   test "invoice.html" do
     report_template = File.read!(Path.join(__DIR__, "example_templates/invoice_report.html.eex"))
     page_template = File.read!(Path.join(__DIR__, "example_templates/invoice_page.html.eex"))
+    logo = Rapport.Image.as_data(File.read!(Path.join(__DIR__, "images/acme.png")))
 
     invoice = %{
       number: 1234,
@@ -79,7 +80,8 @@ defmodule ExampleTest do
         %{name: "Hosting (3 months)", price: 75},
         %{name: "Domain name (1 year)", price: 10}
       ],
-      total_price: 385
+      total_price: 385,
+      logo: logo
     }
 
     html_report =

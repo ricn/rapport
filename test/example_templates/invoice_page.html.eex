@@ -5,7 +5,7 @@
                 <table>
                     <tr>
                         <td class="title">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Acme-corp.png" style="width:60%; max-width:150px;">
+                            <img src="<%= @logo %>" style="width:60%; max-width:150px;">
                         </td>
                         <td>
                             Invoice #: <%= @number %><br>
