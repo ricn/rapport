@@ -29,16 +29,18 @@ defmodule Rapport do
   ## Options
 
     * `template` - An optional EEx template for the report.
+    * `fields` - A map with fields to assign to the EEx report template
   """
 
-  def new(template \\ "") do
+  def new(template \\ "", fields \\ %{}) do
     %Report{
       title: "Report",
       paper_size: :A4,
       rotation: :portrait,
       pages: [],
       template: template,
-      padding: 10
+      padding: 10,
+      fields: fields
     }
   end
 
@@ -158,14 +160,14 @@ defmodule Rapport do
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
     pages = generate_pages(report.pages, report.padding)
-
+    report_template = EEx.eval_string report.template, assigns: report.fields
     assigns = [
       title: report.title,
       paper_settings: paper_settings,
       normalize_css: @normalize_css,
       paper_css: @paper_css,
       pages: pages,
-      report_template: report.template
+      report_template: report_template
     ]
 
     EEx.eval_string @base_template, assigns: assigns

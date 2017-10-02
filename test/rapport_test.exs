@@ -43,19 +43,20 @@ defmodule RapportTest do
       assert html_report =~ "color: red;"
     end
 
-    # Move this to add_page
-    test "must allow inline template" do
-      inline_template = """
-      <section class="sheet padding-10mm">
-        <article><%= @hello %></article>
-      </section>
+    test "must allow fields to be set in the report template" do
+      report_template = """
+        <style>
+          h1 {
+            color: <%= @color %>;
+          }
+        </style>
       """
+
       html_report =
-        Rapport.new
-        |> Rapport.add_page(inline_template, %{hello: "Inline template"})
+        Rapport.new(report_template, %{color: "yellow"})
         |> Rapport.generate_html
 
-      assert html_report =~ "Inline template"
+      assert html_report =~ "color: yellow;"
     end
   end
 
