@@ -35,8 +35,8 @@ defmodule ExampleTest do
   end
 
   test "two_page_table.html" do
-    report_template = File.read!(Path.join(__DIR__, "templates/table_report.html.eex"))
-    page_template = File.read!(Path.join(__DIR__, "templates/table_page.html.eex"))
+    report_template = File.read!(Path.join(__DIR__, "example_templates/table_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "example_templates/table_page.html.eex"))
 
     all_people =
       Enum.map(1..60, fn(num) ->
@@ -60,8 +60,8 @@ defmodule ExampleTest do
   end
 
   test "invoice.html" do
-    report_template = File.read!(Path.join(__DIR__, "templates/invoice_report.html.eex"))
-    page_template = File.read!(Path.join(__DIR__, "templates/invoice_page.html.eex"))
+    report_template = File.read!(Path.join(__DIR__, "example_templates/invoice_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "example_templates/invoice_page.html.eex"))
 
     invoice = %{
       number: 1234,
@@ -98,15 +98,18 @@ defmodule ExampleTest do
     # shows the city, how many people that belongs to the city and how many pages that is needed to list them.
     # The rest of the report lists all the people grouped by city and displays 12 people per page.
 
-    report_template = File.read!(Path.join(__DIR__, "templates/list_of_people_report.html.eex"))
-    cover_page_template = File.read!(Path.join(__DIR__, "templates/list_of_people_cover_page.html.eex"))
-    people_page_template = File.read!(Path.join(__DIR__, "templates/list_of_people_page.html.eex"))
+    report_template = File.read!(Path.join(__DIR__, "example_templates/list_of_people_report.html.eex"))
+    cover_page_template = File.read!(Path.join(__DIR__, "example_templates/list_of_people_cover_page.html.eex"))
+    people_page_template = File.read!(Path.join(__DIR__, "example_templates/list_of_people_page.html.eex"))
+    top_secret_stamp_image = File.read!(Path.join(__DIR__, "images/top_secret_stamp.png"))
 
     cities = ["New York", "San Francisco", "Los Angeles", "Miami", "Chicago", "Boston", "Detroit", "Houston"]
 
-    # Generates 500 random people and sorts them by city
+    top_secret_stamp = Rapport.Image.as_data(top_secret_stamp_image)
+
+    # Generates 250 random people and sorts them by city
     all_people =
-      Enum.map(1..500, fn(num) ->
+      Enum.map(1..250, fn(num) ->
         %{
           employee_no: 10000 + num,
           firstname: Faker.Name.first_name(),
@@ -141,7 +144,7 @@ defmodule ExampleTest do
         people_per_city
         |> Enum.chunk_every(people_per_page)
         |> Enum.map(fn(people) ->
-          %Rapport.Page{template: people_page_template, fields: %{people: people}}
+          %Rapport.Page{template: people_page_template, fields: %{people: people, stamp: top_secret_stamp}}
         end)
       end)
       |> Enum.reverse
@@ -159,8 +162,8 @@ defmodule ExampleTest do
   end
 
   test "page_numbering.html" do
-    report_template = File.read!(Path.join(__DIR__, "templates/page_numbering_report.html.eex"))
-    page_template = File.read!(Path.join(__DIR__, "templates/page_numbering_page.html.eex"))
+    report_template = File.read!(Path.join(__DIR__, "example_templates/page_numbering_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "example_templates/page_numbering_page.html.eex"))
 
     num_of_pages = 3
 
@@ -182,12 +185,10 @@ defmodule ExampleTest do
   end
 
   test "charts.html" do
-    report_template = File.read!(Path.join(__DIR__, "templates/charts_report.html.eex"))
-    page_template = File.read!(Path.join(__DIR__, "templates/charts_page.html.eex"))
+    report_template = File.read!(Path.join(__DIR__, "example_templates/charts_report.html.eex"))
+    page_template = File.read!(Path.join(__DIR__, "example_templates/charts_page.html.eex"))
     labels = Enum.join(["Mon", "Tue", "Wed", "Thu", "Fri"], ",")
     series = Enum.join([5, 2, 4, 2, 1], ",")
-    IO.inspect labels
-    IO.inspect series
     html_report =
       Rapport.new(report_template)
       |> Rapport.set_rotation(:landscape)

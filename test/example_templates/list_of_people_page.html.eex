@@ -1,5 +1,5 @@
 <div class="top-secret">
-	<img src="https://www.wpclipart.com/signs_symbol/words/stamps/top_secret_stamp.png">
+	<img src="<%= @stamp %>">
 </div>
 
 <h2><%= List.first(@people).city %></h2>
