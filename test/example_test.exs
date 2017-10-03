@@ -15,8 +15,15 @@ defmodule ExampleTest do
 
   test "custom_fonts_and_styles.html" do
     report_template = """
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
     <style>
+      @font-face {
+        font-family: 'Tangerine';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Tangerine Regular'), local('Tangerine-Regular'), url(<%= @font %>) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+      }
+
       h1 {
         font-family: 'Tangerine', serif;
         font-size: 48px;
@@ -25,8 +32,9 @@ defmodule ExampleTest do
     </style>
     """
     page_template = "<h1><%= @hello %></h1>"
+    font = Rapport.Font.as_data(File.read!(Path.join(__DIR__, "fonts/tangerine.woff2")))
     html_report =
-      Rapport.new(report_template)
+      Rapport.new(report_template, %{font: font})
       |> Rapport.add_page(page_template, %{hello: "Hello world!"})
       |> Rapport.generate_html
 
