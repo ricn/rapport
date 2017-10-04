@@ -15,7 +15,7 @@ by adding `rapport` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:rapport, "~> 0.4"}
+    {:rapport, "~> 0.5"}
   ]
 end
 ```
