@@ -40,7 +40,8 @@ defmodule Rapport do
       pages: [],
       template: template,
       padding: 10,
-      fields: fields
+      fields: fields,
+      add_page_numbers: true
     }
   end
 
@@ -159,7 +160,7 @@ defmodule Rapport do
 
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
-    pages = generate_pages(report.pages, report.padding)
+    pages = generate_pages(report.pages, report.padding, report.add_page_numbers, report.page_number_position)
     report_template = EEx.eval_string report.template, assigns: report.fields
     assigns = [
       title: report.title,
@@ -173,6 +174,17 @@ defmodule Rapport do
     EEx.eval_string @base_template, assigns: assigns
   end
 
+  @doc """
+  Adds page numbers to the pages
+
+  ## Options
+  """
+  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right) do
+    report
+    |> Map.put(:add_page_numbers, true)
+    |> Map.put(:page_number_position, page_number_position)
+  end
+
   #########################
   ### Private functions ###
   #########################
@@ -183,8 +195,20 @@ defmodule Rapport do
     |> Enum.join
   end
 
+  defp generate_pages(pages, padding, add_page_numbers, page_number_position) when is_list(pages) and add_page_numbers == true do
+    total_pages = Enum.count(pages)
+    Enum.reverse(pages)
+    |> Enum.with_index
+    |> Enum.map(fn({page, index}) -> generate_page(page, padding, index + 1, total_pages, page_number_position) end)
+    |> Enum.join
+  end
+
   defp generate_page(p, padding) do
     EEx.eval_string wrap_page_with_padding(p.template, padding), assigns: p.fields
+  end
+
+  defp generate_page(p, padding, page_number, total_pages, page_number_position) do
+    EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_position), assigns: p.fields
   end
 
   defp wrap_page_with_padding(template, padding) do
@@ -192,6 +216,18 @@ defmodule Rapport do
     """
     <div class=\"sheet #{padding_css}\">
       #{template}
+    </div>
+    """
+  end
+
+  defp wrap_page_with_padding(template, padding, page_number, _total_pages, page_number_position) do
+    padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
+    position = Atom.to_string(page_number_position)
+    page_number_tag = "<span class='page-numbering #{position}'>#{page_number}</span>"
+    """
+    <div class=\"sheet #{padding_css}\">
+      #{template}
+      #{page_number_tag}
     </div>
     """
   end

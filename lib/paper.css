@@ -63,3 +63,12 @@ body.ledger.landscape       .sheet { width: 432mm; height: 279mm }
   body.ledger                 { width: 279mm }
   body.ledger.landscape       { width: 432mm }
 }
+
+.page-numbering {
+  position: absolute;
+}
+
+.bottom_right {
+  bottom: 2em;
+  right: 2em;
+}

@@ -284,4 +284,34 @@ defmodule RapportTest do
       end
     end
   end
+
+  describe "add_page_numbers" do
+    test "add page numbers without options" do
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Page 1"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 2"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 3"})
+        |> Rapport.add_page_numbers
+        |> Rapport.generate_html
+
+        assert html_report =~ "<span class='page-numbering bottom_right'>1</span>"
+        assert html_report =~ "<span class='page-numbering bottom_right'>2</span>"
+        assert html_report =~ "<span class='page-numbering bottom_right'>3</span>"
+    end
+
+    test "add page numbers to bottom left corner" do
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Page 1"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 2"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 3"})
+        |> Rapport.add_page_numbers(:bottom_left)
+        |> Rapport.generate_html
+
+        assert html_report =~ "<span class='page-numbering bottom_left'>1</span>"
+        assert html_report =~ "<span class='page-numbering bottom_left'>2</span>"
+        assert html_report =~ "<span class='page-numbering bottom_left'>3</span>"
+    end
+  end
 end
