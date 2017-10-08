@@ -17,7 +17,7 @@ defmodule Rapport do
   defdelegate add_pages(report, pages), to: Rapport.Page
 
   defdelegate generate_pages(pages, padding), to: Rapport.Page
-  defdelegate generate_pages(pages, padding, add_page_numbers, page_number_position, page_number_formatter), to: Rapport.Page
+  defdelegate generate_pages(pages, padding, page_number_position, page_number_formatter), to: Rapport.Page
 
   defdelegate generate_page(p, padding), to: Rapport.Page
   defdelegate generate_page(p, padding, page_number, total_pages, page_number_position, page_number_formatter), to: Rapport.Page
@@ -136,7 +136,7 @@ defmodule Rapport do
 
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
-    pages = generate_pages(report.pages, report.padding, report.add_page_numbers, report.page_number_position, report.page_number_formatter)
+    pages = generate_pages(report.pages, report.padding, report.page_number_position, report.page_number_formatter)
     report_template = EEx.eval_string report.template, assigns: report.fields
     assigns = [
       title: report.title,

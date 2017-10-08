@@ -50,7 +50,7 @@ defmodule Rapport.Page do
   end
 
   @doc false
-  def generate_pages(pages, padding, add_page_numbers, page_number_position, page_number_formatter) when is_list(pages) do
+  def generate_pages(pages, padding, page_number_position, page_number_formatter) when is_list(pages) do
     total_pages = Enum.count(pages)
     Enum.reverse(pages)
     |> Enum.with_index
