@@ -7,6 +7,7 @@ defmodule Rapport do
 
   alias Rapport.Report
   alias Rapport.Page
+  alias Rapport.PageNumbering
 
   @normalize_css File.read!(Path.join(__DIR__, "normalize.css"))
   @paper_css File.read!(Path.join(__DIR__, "paper.css"))
@@ -17,12 +18,12 @@ defmodule Rapport do
   defdelegate add_pages(report, pages), to: Rapport.Page
 
   defdelegate generate_pages(pages, padding), to: Rapport.Page
-  defdelegate generate_pages(pages, padding, page_number_position, page_number_formatter), to: Rapport.Page
+  defdelegate generate_pages(pages, padding, page_number_opts), to: Rapport.Page
 
   defdelegate generate_page(p, padding), to: Rapport.Page
-  defdelegate generate_page(p, padding, page_number, total_pages, page_number_position, page_number_formatter), to: Rapport.Page
+  defdelegate generate_page(p, padding, page_number, total_pages, page_number_opts), to: Rapport.Page
   defdelegate wrap_page_with_padding(template, padding), to: Rapport.Page
-  defdelegate wrap_page_with_padding(template, padding, page_number, total_pages, page_number_position, page_number_formatter), to: Rapport.Page
+  defdelegate wrap_page_with_padding(template, padding, page_number, total_pages, page_number_opts), to: Rapport.Page
 
   @doc """
   Creates a new report.
@@ -53,9 +54,11 @@ defmodule Rapport do
       template: template,
       padding: 10,
       fields: fields,
-      add_page_numbers: false,
-      page_number_position: :bottom_right,
-      page_number_formatter: fn(cnt_page, _tot_pages) -> "#{cnt_page}" end
+      page_number_opts: %PageNumbering {
+        add_page_numbers: false,
+        page_number_position: :bottom_right,
+        page_number_formatter: fn(cnt_page, _tot_pages) -> "#{cnt_page}" end
+      }
     }
   end
 
@@ -138,8 +141,8 @@ defmodule Rapport do
     paper_settings = paper_settings_css(report)
 
     pages =
-      if report.add_page_numbers do
-        generate_pages(report.pages, report.padding, report.page_number_position, report.page_number_formatter)
+      if report.page_number_opts.add_page_numbers do
+        generate_pages(report.pages, report.padding, report.page_number_opts)
       else
         generate_pages(report.pages, report.padding)
       end
@@ -170,10 +173,14 @@ defmodule Rapport do
   def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right, formatter \\ fn(cnt_page, tot_pages) -> "#{cnt_page}" end)
   when is_atom(page_number_position) do
     validate_list(page_number_position, [:bottom_right, :bottom_left, :top_right, :top_left], "Invalid page number position")
-    report
-    |> Map.put(:add_page_numbers, true)
-    |> Map.put(:page_number_position, page_number_position)
-    |> Map.put(:page_number_formatter, formatter)
+
+    opts =
+      report.page_number_opts
+      |> Map.put(:add_page_numbers, true)
+      |> Map.put(:page_number_position, page_number_position)
+      |> Map.put(:page_number_formatter, formatter)
+
+    Map.put(report, :page_number_opts, opts)
   end
 
   defp paper_settings_css(%Report{} = report) do

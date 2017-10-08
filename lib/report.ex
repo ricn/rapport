@@ -6,7 +6,5 @@ defmodule Rapport.Report do
             template: nil,
             padding: nil,
             fields: nil,
-            add_page_numbers: nil,
-            page_number_position: nil,
-            page_number_formatter: nil
+            page_number_opts: nil
 end

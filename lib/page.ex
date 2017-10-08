@@ -50,11 +50,11 @@ defmodule Rapport.Page do
   end
 
   @doc false
-  def generate_pages(pages, padding, page_number_position, page_number_formatter) when is_list(pages) do
+  def generate_pages(pages, padding, page_number_opts) when is_list(pages) do
     total_pages = Enum.count(pages)
     Enum.reverse(pages)
     |> Enum.with_index
-    |> Enum.map(fn({page, index}) -> generate_page(page, padding, index + 1, total_pages, page_number_position, page_number_formatter) end)
+    |> Enum.map(fn({page, index}) -> generate_page(page, padding, index + 1, total_pages, page_number_opts) end)
     |> Enum.join
   end
 
@@ -64,8 +64,8 @@ defmodule Rapport.Page do
   end
 
   @doc false
-  def generate_page(p, padding, page_number, total_pages, page_number_position, page_number_formatter) do
-    EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_position, page_number_formatter), assigns: p.fields
+  def generate_page(p, padding, page_number, total_pages, page_number_opts) do
+    EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_opts), assigns: p.fields
   end
 
   @doc false
@@ -79,10 +79,11 @@ defmodule Rapport.Page do
   end
 
   @doc false
-  def wrap_page_with_padding(template, padding, page_number, total_pages, page_number_position, page_number_formatter) do
+  def wrap_page_with_padding(template, padding, page_number, total_pages, page_number_opts) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
-    position = Atom.to_string(page_number_position)
-    page_number_tag = "<span class='page-numbering #{position}'>#{page_number_formatter.(page_number, total_pages)}</span>"
+    position = Atom.to_string(page_number_opts.page_number_position)
+    formatter = page_number_opts.page_number_formatter
+    page_number_tag = "<span class='page-numbering #{position}'>#{formatter.(page_number, total_pages)}</span>"
     """
     <div class=\"sheet #{padding_css}\">
       #{template}
