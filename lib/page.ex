@@ -90,5 +90,4 @@ defmodule Rapport.Page do
     </div>
     """
   end
-
 end

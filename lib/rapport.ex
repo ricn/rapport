@@ -54,7 +54,7 @@ defmodule Rapport do
       padding: 10,
       fields: fields,
       add_page_numbers: false,
-      page_number_position: :bottom_left,
+      page_number_position: :bottom_right,
       page_number_formatter: fn(cnt_page, _tot_pages) -> "#{cnt_page}" end
     }
   end
@@ -136,7 +136,13 @@ defmodule Rapport do
 
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
-    pages = generate_pages(report.pages, report.padding, report.page_number_position, report.page_number_formatter)
+
+    pages =
+      if report.add_page_numbers do
+        generate_pages(report.pages, report.padding, report.page_number_position, report.page_number_formatter)
+      else
+        generate_pages(report.pages, report.padding)
+      end
     report_template = EEx.eval_string report.template, assigns: report.fields
     assigns = [
       title: report.title,

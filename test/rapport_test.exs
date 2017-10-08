@@ -358,5 +358,17 @@ defmodule RapportTest do
         assert html_report =~ "<span class='page-numbering bottom_right'>1 of 2</span>"
         assert html_report =~ "<span class='page-numbering bottom_right'>2 of 2</span>"
     end
+
+    test "must not add page numbers if we don't want them" do
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Page 1"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 2"})
+        |> Rapport.generate_html
+        File.write("C:/temp/test.html", html_report)
+
+        assert !String.contains?(html_report, "<span class='page-numbering bottom_left'>1</span>")
+        assert !String.contains?(html_report, "<span class='page-numbering bottom_left'>2</span>")
+    end
   end
 end
