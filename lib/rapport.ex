@@ -22,8 +22,13 @@ defmodule Rapport do
 
   defdelegate generate_page(p, padding), to: Rapport.Page
   defdelegate generate_page(p, padding, page_number, total_pages, page_number_opts), to: Rapport.Page
+
   defdelegate wrap_page_with_padding(template, padding), to: Rapport.Page
   defdelegate wrap_page_with_padding(template, padding, page_number, total_pages, page_number_opts), to: Rapport.Page
+
+  defdelegate add_page_numbers(report, page_number_position, formatter), to: Rapport.PageNumbering
+  defdelegate add_page_numbers(report, page_number_position), to: Rapport.PageNumbering
+  defdelegate add_page_numbers(report), to: Rapport.PageNumbering
 
   @doc """
   Creates a new report.
@@ -159,37 +164,14 @@ defmodule Rapport do
     EEx.eval_string @base_template, assigns: assigns
   end
 
-  @doc """
-  Adds page numbers to the pages
-
-  It expects the page position to be an atom and must be `:bottom_right`, `:bottom_left`, `:top_right` or `:top_left`,
-  otherwise `ArgumentError` will be raised.
-
-  ## Options
-
-    * `report` - The `Rapport.Report` that you want set the padding for
-    * `page_number_position` - Where the page number will be positioned.
-  """
-  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right, formatter \\ fn(cnt_page, tot_pages) -> "#{cnt_page}" end)
-  when is_atom(page_number_position) do
-    validate_list(page_number_position, [:bottom_right, :bottom_left, :top_right, :top_left], "Invalid page number position")
-
-    opts =
-      report.page_number_opts
-      |> Map.put(:add_page_numbers, true)
-      |> Map.put(:page_number_position, page_number_position)
-      |> Map.put(:page_number_formatter, formatter)
-
-    Map.put(report, :page_number_opts, opts)
-  end
-
   defp paper_settings_css(%Report{} = report) do
     paper_size = Atom.to_string(report.paper_size)
     rotation = Atom.to_string(report.rotation)
     if rotation == "portrait", do: paper_size, else: "#{paper_size} #{rotation}"
   end
 
-  defp validate_list(what, list, msg) do
+  @doc false
+  def validate_list(what, list, msg) do
     if what not in list, do: raise ArgumentError, message: msg
   end
 end
