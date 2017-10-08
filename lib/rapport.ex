@@ -41,7 +41,8 @@ defmodule Rapport do
       template: template,
       padding: 10,
       fields: fields,
-      add_page_numbers: true
+      add_page_numbers: false,
+      page_number_position: :bottom_left
     }
   end
 
@@ -177,9 +178,17 @@ defmodule Rapport do
   @doc """
   Adds page numbers to the pages
 
+  It expects the page position to be an atom and must be `:bottom_right`, `:bottom_left`, `:top_right` or `:top_left`,
+  otherwise `ArgumentError` will be raised.
+
   ## Options
+
+    * `report` - The `Rapport.Report` that you want set the padding for
+    * `page_number_position` - Where the page number will be positioned.
   """
-  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right) do
+  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right)
+  when is_atom(page_number_position) do
+    validate_list(page_number_position, [:bottom_right, :bottom_left, :top_right, :top_left], "Invalid page number position")
     report
     |> Map.put(:add_page_numbers, true)
     |> Map.put(:page_number_position, page_number_position)
@@ -195,7 +204,7 @@ defmodule Rapport do
     |> Enum.join
   end
 
-  defp generate_pages(pages, padding, add_page_numbers, page_number_position) when is_list(pages) and add_page_numbers == true do
+  defp generate_pages(pages, padding, add_page_numbers, page_number_position) when is_list(pages) do
     total_pages = Enum.count(pages)
     Enum.reverse(pages)
     |> Enum.with_index
@@ -211,6 +220,7 @@ defmodule Rapport do
     EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_position), assigns: p.fields
   end
 
+  # TODO: Change name
   defp wrap_page_with_padding(template, padding) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
     """
@@ -220,6 +230,7 @@ defmodule Rapport do
     """
   end
 
+  # TODO: Change name
   defp wrap_page_with_padding(template, padding, page_number, _total_pages, page_number_position) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
     position = Atom.to_string(page_number_position)
