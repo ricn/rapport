@@ -336,5 +336,27 @@ defmodule RapportTest do
         |> Rapport.add_page_numbers(:middle_middle)
       end
     end
+
+    test "format page numbers as 1 (2)" do
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Page 1"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 2"})
+        |> Rapport.add_page_numbers(:bottom_right, fn(current_page, total_pages) -> "#{current_page} (#{total_pages})" end)
+        |> Rapport.generate_html
+        assert html_report =~ "<span class='page-numbering bottom_right'>1 (2)</span>"
+        assert html_report =~ "<span class='page-numbering bottom_right'>2 (2)</span>"
+    end
+
+    test "format page numbers as 1 of 2" do
+      html_report =
+        Rapport.new
+        |> Rapport.add_page(@hello_template, %{hello: "Page 1"})
+        |> Rapport.add_page(@hello_template, %{hello: "Page 2"})
+        |> Rapport.add_page_numbers(:bottom_right, fn(current_page, total_pages) -> "#{current_page} of #{total_pages}" end)
+        |> Rapport.generate_html
+        assert html_report =~ "<span class='page-numbering bottom_right'>1 of 2</span>"
+        assert html_report =~ "<span class='page-numbering bottom_right'>2 of 2</span>"
+    end
   end
 end

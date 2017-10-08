@@ -42,7 +42,8 @@ defmodule Rapport do
       padding: 10,
       fields: fields,
       add_page_numbers: false,
-      page_number_position: :bottom_left
+      page_number_position: :bottom_left,
+      page_number_formatter: fn(cnt_page, _tot_pages) -> "#{cnt_page}" end
     }
   end
 
@@ -161,7 +162,7 @@ defmodule Rapport do
 
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
-    pages = generate_pages(report.pages, report.padding, report.add_page_numbers, report.page_number_position)
+    pages = generate_pages(report.pages, report.padding, report.add_page_numbers, report.page_number_position, report.page_number_formatter)
     report_template = EEx.eval_string report.template, assigns: report.fields
     assigns = [
       title: report.title,
@@ -186,12 +187,13 @@ defmodule Rapport do
     * `report` - The `Rapport.Report` that you want set the padding for
     * `page_number_position` - Where the page number will be positioned.
   """
-  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right)
+  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right, formatter \\ fn(cnt_page, tot_pages) -> "#{cnt_page}" end)
   when is_atom(page_number_position) do
     validate_list(page_number_position, [:bottom_right, :bottom_left, :top_right, :top_left], "Invalid page number position")
     report
     |> Map.put(:add_page_numbers, true)
     |> Map.put(:page_number_position, page_number_position)
+    |> Map.put(:page_number_formatter, formatter)
   end
 
   #########################
@@ -204,11 +206,11 @@ defmodule Rapport do
     |> Enum.join
   end
 
-  defp generate_pages(pages, padding, add_page_numbers, page_number_position) when is_list(pages) do
+  defp generate_pages(pages, padding, add_page_numbers, page_number_position, page_number_formatter) when is_list(pages) do
     total_pages = Enum.count(pages)
     Enum.reverse(pages)
     |> Enum.with_index
-    |> Enum.map(fn({page, index}) -> generate_page(page, padding, index + 1, total_pages, page_number_position) end)
+    |> Enum.map(fn({page, index}) -> generate_page(page, padding, index + 1, total_pages, page_number_position, page_number_formatter) end)
     |> Enum.join
   end
 
@@ -216,8 +218,8 @@ defmodule Rapport do
     EEx.eval_string wrap_page_with_padding(p.template, padding), assigns: p.fields
   end
 
-  defp generate_page(p, padding, page_number, total_pages, page_number_position) do
-    EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_position), assigns: p.fields
+  defp generate_page(p, padding, page_number, total_pages, page_number_position, page_number_formatter) do
+    EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_position, page_number_formatter), assigns: p.fields
   end
 
   # TODO: Change name
@@ -231,10 +233,10 @@ defmodule Rapport do
   end
 
   # TODO: Change name
-  defp wrap_page_with_padding(template, padding, page_number, _total_pages, page_number_position) do
+  defp wrap_page_with_padding(template, padding, page_number, total_pages, page_number_position, page_number_formatter) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
     position = Atom.to_string(page_number_position)
-    page_number_tag = "<span class='page-numbering #{position}'>#{page_number}</span>"
+    page_number_tag = "<span class='page-numbering #{position}'>#{page_number_formatter.(page_number, total_pages)}</span>"
     """
     <div class=\"sheet #{padding_css}\">
       #{template}

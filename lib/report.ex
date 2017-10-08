@@ -7,5 +7,6 @@ defmodule Rapport.Report do
             padding: nil,
             fields: nil,
             add_page_numbers: nil,
-            page_number_position: nil
+            page_number_position: nil,
+            page_number_formatter: nil
 end
