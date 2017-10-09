@@ -2,8 +2,6 @@ defmodule RapportTest do
   use ExUnit.Case
   doctest Rapport
 
-  alias Rapport.Page
-
   @hello_template File.read!(Path.join(__DIR__, "templates/hello.html.eex"))
   @two_fields_template File.read!(Path.join(__DIR__, "templates/two_fields.html.eex"))
   @list_template File.read!(Path.join(__DIR__, "templates/list.html.eex"))
@@ -57,59 +55,6 @@ defmodule RapportTest do
         |> Rapport.generate_html
 
       assert html_report =~ "color: yellow;"
-    end
-  end
-
-  describe "add_page" do
-    test "add one page with template and fields" do
-      report =
-        Rapport.new
-        |> Rapport.add_page(@hello_template, %{hello: "Hello world"})
-
-      assert length(report.pages) == 1
-      assert List.first(report.pages).fields.hello == "Hello world"
-    end
-
-    test "add two pages with template and fields" do
-      report =
-        Rapport.new
-        |> Rapport.add_page(@hello_template, %{hello: "One"})
-        |> Rapport.add_page(@hello_template, %{hello: "Two"})
-
-      assert length(report.pages) == 2
-    end
-
-    test "add one page with a Page struct" do
-      report =
-        Rapport.new
-        |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "Hello world"}})
-
-      assert length(report.pages) == 1
-      assert List.first(report.pages).fields.hello == "Hello world"
-    end
-
-    test "add two pages using Page structs" do
-      report =
-        Rapport.new
-        |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "One"}})
-        |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "Two"}})
-
-      assert length(report.pages) == 2
-    end
-  end
-
-  describe "add_pages" do
-    test "add two pages" do
-      list_of_pages = [
-        %Page{template: @hello_template, fields: %{hello: "One"}},
-        %Page{template: @hello_template, fields: %{hello: "Two"}}
-      ]
-
-      report =
-        Rapport.new
-        |> Rapport.add_pages(list_of_pages)
-
-      assert length(report.pages) == 2
     end
   end
 
@@ -365,7 +310,6 @@ defmodule RapportTest do
         |> Rapport.add_page(@hello_template, %{hello: "Page 1"})
         |> Rapport.add_page(@hello_template, %{hello: "Page 2"})
         |> Rapport.generate_html
-        File.write("C:/temp/test.html", html_report)
 
         assert !String.contains?(html_report, "<span class='page-numbering bottom_left'>1</span>")
         assert !String.contains?(html_report, "<span class='page-numbering bottom_left'>2</span>")
