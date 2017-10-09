@@ -77,7 +77,6 @@ end
 ```
 
 ## Upcoming features
-  * Barcode helpers
   * Charts
   * PDF conversion
 
