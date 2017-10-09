@@ -11,37 +11,41 @@ defmodule Rapport.Barcode do
     * `barcode_type` - The barcode type to use
     * `text` - The text to use to generate the barcode
   """
-  def create(barcode_type, text) do
+  def create(barcode_type, text, opts \\ []) do
     case barcode_type do
-      :code39   -> create_code39(text)
-      :code93   -> create_code93(text)
-      :code128  -> create_code128(text)
-      :itf      -> create_itf(text)
+      :code39   -> create_code39(text, opts)
+      :code93   -> create_code93(text, opts)
+      :code128  -> create_code128(text, opts)
+      :itf      -> create_itf(text, opts)
       _ -> raise ArgumentError, message: "Invalid barcode type"
     end
   end
 
-  defp create_code39(text) do
+  defp create_code39(text, opts \\ []) do
     out_file = generate_random_file()
-    Barlix.Code39.encode!(text) |> Barlix.PNG.print(file: out_file)
+    opts = Keyword.put(opts, :file, out_file)
+    Barlix.Code39.encode!(text) |> Barlix.PNG.print(opts)
     File.read!(out_file)
   end
 
-  defp create_code93(text) do
+  defp create_code93(text, opts \\ []) do
     out_file = generate_random_file()
-    Barlix.Code93.encode!(text) |> Barlix.PNG.print(file: out_file)
+    opts = Keyword.put(opts, :file, out_file)
+    Barlix.Code93.encode!(text) |> Barlix.PNG.print(opts)
     File.read!(out_file)
   end
 
-  defp create_code128(text) do
+  defp create_code128(text, opts \\ []) do
     out_file = generate_random_file()
-    Barlix.Code128.encode!(text) |> Barlix.PNG.print(file: out_file)
+    opts = Keyword.put(opts, :file, out_file)
+    Barlix.Code128.encode!(text) |> Barlix.PNG.print(opts)
     File.read!(out_file)
   end
 
-  defp create_itf(text) do
+  defp create_itf(text, opts \\ []) do
     out_file = generate_random_file()
-    Barlix.Code128.encode!(text) |> Barlix.PNG.print(file: out_file)
+    opts = Keyword.put(opts, :file, out_file)
+    Barlix.Code128.encode!(text) |> Barlix.PNG.print(opts)
     File.read!(out_file)
   end
 
