@@ -47,6 +47,7 @@ The snippet above generates a report containing only one page with a heading tha
   * [Invoice](https://rawgit.com/ricn/rapport/master/examples/invoice.html)
   * [Page numbering](https://rawgit.com/ricn/rapport/master/examples/page_numbering.html)
   * [List of people with cover page](https://rawgit.com/ricn/rapport/master/examples/list_of_people.html)
+  * [Barcodes](https://rawgit.com/ricn/rapport/master/examples/barcodes.html)
   * More examples are coming...
 
 If you want to see how the examples has been created, you can look at the `example_test.exs` file in the test folder.
