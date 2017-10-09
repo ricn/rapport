@@ -20,6 +20,14 @@ def deps do
 end
 ```
 
+## Notable features
+  * Specify paper size for the report
+  * Specify rotation for the report
+  * Image helpers
+  * Font helpers
+  * Page numbering
+  * Add custom styling & even Javascript
+
 ## Hello world
 
 ```elixir
@@ -66,6 +74,11 @@ defmodule ReportsWeb.ReportController do
   end
 end
 ```
+
+## Upcoming features
+  * Barcode helpers
+  * Charts
+  * PDF conversion
 
 ## Credits
 
