@@ -1,0 +1,12 @@
+<div>
+  <img src="<%= @code39 %>" />
+</div>
+<div>
+  <img src="<%= @code93 %>" />
+</div>
+<div>
+  <img src="<%= @code128 %>" />
+</div>
+<div>
+  <img src="<%= @itf %>" />
+</div>

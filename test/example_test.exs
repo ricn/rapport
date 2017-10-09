@@ -187,4 +187,22 @@ defmodule ExampleTest do
     file = Path.join([System.cwd, "examples", "page_numbering.html"])
     File.write!(file, html_report)
   end
+
+  test "barcodes.html" do
+    page_template = File.read!(Path.join(__DIR__, "example_templates/barcode_page.html.eex"))
+    opts = [height: 100]
+    text = "20171009213822"
+    code39 = Rapport.Barcode.create(:code39, text, opts) |> Rapport.Image.as_data
+    code93 = Rapport.Barcode.create(:code93, text, opts) |> Rapport.Image.as_data
+    code128 = Rapport.Barcode.create(:code128, text, opts) |> Rapport.Image.as_data
+    itf = Rapport.Barcode.create(:itf, text, opts) |> Rapport.Image.as_data
+
+    html_report =
+      Rapport.new
+      |> Rapport.add_page(page_template, %{code39: code39, code93: code93, code128: code128, itf: itf, text: text})
+      |> Rapport.generate_html
+
+    file = Path.join([System.cwd, "examples", "barcodes.html"])
+    File.write!(file, html_report)
+  end
 end
