@@ -6,7 +6,6 @@ defmodule Rapport do
   """
 
   alias Rapport.Report
-  alias Rapport.Page
   alias Rapport.PageNumbering
 
   @normalize_css File.read!(Path.join(__DIR__, "normalize.css"))
@@ -144,12 +143,11 @@ defmodule Rapport do
 
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
-
+    add_page_numbers? = report.page_number_opts.add_page_numbers
     pages =
-      if report.page_number_opts.add_page_numbers do
-        generate_pages(report.pages, report.padding, report.page_number_opts)
-      else
-        generate_pages(report.pages, report.padding)
+      case add_page_numbers? do
+        true -> generate_pages(report.pages, report.padding, report.page_number_opts)
+        false -> generate_pages(report.pages, report.padding)
       end
     report_template = EEx.eval_string report.template, assigns: report.fields
     assigns = [
