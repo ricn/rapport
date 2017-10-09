@@ -22,9 +22,6 @@ defmodule Rapport do
   defdelegate generate_page(p, padding), to: Rapport.Page
   defdelegate generate_page(p, padding, page_number, total_pages, page_number_opts), to: Rapport.Page
 
-  defdelegate wrap_page_with_padding(template, padding), to: Rapport.Page
-  defdelegate wrap_page_with_padding(template, padding, page_number, total_pages, page_number_opts), to: Rapport.Page
-
   defdelegate add_page_numbers(report, page_number_position, formatter), to: Rapport.PageNumbering
   defdelegate add_page_numbers(report, page_number_position), to: Rapport.PageNumbering
   defdelegate add_page_numbers(report), to: Rapport.PageNumbering

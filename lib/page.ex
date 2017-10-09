@@ -60,16 +60,15 @@ defmodule Rapport.Page do
 
   @doc false
   def generate_page(p, padding) do
-    EEx.eval_string wrap_page_with_padding(p.template, padding), assigns: p.fields
+    EEx.eval_string wrap_page(p.template, padding), assigns: p.fields
   end
 
   @doc false
   def generate_page(p, padding, page_number, total_pages, page_number_opts) do
-    EEx.eval_string wrap_page_with_padding(p.template, padding, page_number, total_pages, page_number_opts), assigns: p.fields
+    EEx.eval_string wrap_page(p.template, padding, page_number, total_pages, page_number_opts), assigns: p.fields
   end
 
-  @doc false
-  def wrap_page_with_padding(template, padding) do
+  defp wrap_page(template, padding) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
     """
     <div class=\"sheet #{padding_css}\">
@@ -78,8 +77,7 @@ defmodule Rapport.Page do
     """
   end
 
-  @doc false
-  def wrap_page_with_padding(template, padding, page_number, total_pages, page_number_opts) do
+  defp wrap_page(template, padding, page_number, total_pages, page_number_opts) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
     position = Atom.to_string(page_number_opts.page_number_position)
     formatter = page_number_opts.page_number_formatter
