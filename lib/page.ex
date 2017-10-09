@@ -58,13 +58,11 @@ defmodule Rapport.Page do
     |> Enum.join
   end
 
-  @doc false
-  def generate_page(p, padding) do
+  defp generate_page(p, padding) do
     EEx.eval_string wrap_page(p.template, padding), assigns: p.fields
   end
 
-  @doc false
-  def generate_page(p, padding, page_number, total_pages, page_number_opts) do
+  defp generate_page(p, padding, page_number, total_pages, page_number_opts) do
     EEx.eval_string wrap_page(p.template, padding, page_number, total_pages, page_number_opts), assigns: p.fields
   end
 
