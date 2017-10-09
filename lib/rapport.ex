@@ -8,9 +8,9 @@ defmodule Rapport do
   alias Rapport.Report
   alias Rapport.PageNumbering
 
-  @normalize_css File.read!(Path.join(__DIR__, "normalize.css"))
-  @paper_css File.read!(Path.join(__DIR__, "paper.css"))
-  @base_template File.read!(Path.join(__DIR__, "base_template.html.eex"))
+  @normalize_css File.read!(Path.join(__DIR__, "base_template/normalize.css"))
+  @paper_css File.read!(Path.join(__DIR__, "base_template/paper.css"))
+  @base_template File.read!(Path.join(__DIR__, "base_template/base_template.html.eex"))
 
   defdelegate add_page(report, page_template, fields), to: Rapport.Page
   defdelegate add_page(report, page), to: Rapport.Page
