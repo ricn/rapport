@@ -172,22 +172,16 @@ defmodule ExampleTest do
   end
 
   test "page_numbering.html" do
-    report_template = File.read!(Path.join(__DIR__, "example_templates/page_numbering_report.html.eex"))
     page_template = File.read!(Path.join(__DIR__, "example_templates/page_numbering_page.html.eex"))
+    random_text = Enum.map(1..6, fn(_) -> Faker.Lorem.paragraphs end) |> Enum.join
+    fields = %{text: random_text}
 
-    num_of_pages = 3
-
-    pages =
-      Enum.map(1..num_of_pages, fn(page_number) ->
-        random_text = Enum.map(1..6, fn(_) -> Faker.Lorem.paragraphs end) |> Enum.join
-        fields = %{text: random_text, page_number: page_number, num_of_pages: num_of_pages}
-        %Rapport.Page{template: page_template, fields: fields}
-      end)
-      |> Enum.reverse
+    pages = Enum.map(1..4, fn(_) -> %Rapport.Page{template: page_template, fields: fields} end)
 
     html_report =
-      Rapport.new(report_template)
+      Rapport.new
       |> Rapport.add_pages(pages)
+      |> Rapport.add_page_numbers(:bottom_right, fn(current_page, total_pages) -> "#{current_page} of #{total_pages}"end)
       |> Rapport.generate_html
 
     file = Path.join([System.cwd, "examples", "page_numbering.html"])

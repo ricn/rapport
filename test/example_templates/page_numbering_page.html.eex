@@ -1,4 +1,2 @@
 <h1>Random text</h1>
 <p><%= @text %></p>
-
-<p class="page-numbering"> Page <%= @page_number %> of <%= @num_of_pages %></p>
