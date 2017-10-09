@@ -27,6 +27,7 @@ end
   * Font helpers
   * Page numbering
   * Add custom styling & even Javascript
+  * Barcodes
 
 ## Hello world
 
