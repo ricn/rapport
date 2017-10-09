@@ -1,4 +1,16 @@
 defmodule Rapport.Barcode do
+
+  @doc """
+  Creates a barcode image (PNG) with the given text
+
+  It expects the barcode type to be an :atom and it must be `:code39`, `:code93`, `code128` or `:itf`,
+  otherwise `ArgumentError` will be raised.
+
+  ## Options
+
+    * `barcode_type` - The barcode type to use
+    * `text` - The text to use to generate the barcode
+  """
   def create(barcode_type, text) do
     case barcode_type do
       :code39   -> create_code39(text)
