@@ -21,32 +21,40 @@ defmodule Rapport.Barcode do
     end
   end
 
-  defp create_code39(text, opts \\ []) do
+  defp create_code39(text, opts) do
     out_file = generate_random_file()
     opts = Keyword.put(opts, :file, out_file)
     Barlix.Code39.encode!(text) |> Barlix.PNG.print(opts)
-    File.read!(out_file)
+    png = File.read!(out_file)
+    File.rm!(out_file)
+    png
   end
 
-  defp create_code93(text, opts \\ []) do
+  defp create_code93(text, opts) do
     out_file = generate_random_file()
     opts = Keyword.put(opts, :file, out_file)
     Barlix.Code93.encode!(text) |> Barlix.PNG.print(opts)
-    File.read!(out_file)
+    png = File.read!(out_file)
+    File.rm!(out_file)
+    png
   end
 
-  defp create_code128(text, opts \\ []) do
+  defp create_code128(text, opts) do
     out_file = generate_random_file()
     opts = Keyword.put(opts, :file, out_file)
     Barlix.Code128.encode!(text) |> Barlix.PNG.print(opts)
-    File.read!(out_file)
+    png = File.read!(out_file)
+    File.rm!(out_file)
+    png
   end
 
-  defp create_itf(text, opts \\ []) do
+  defp create_itf(text, opts) do
     out_file = generate_random_file()
     opts = Keyword.put(opts, :file, out_file)
     Barlix.Code128.encode!(text) |> Barlix.PNG.print(opts)
-    File.read!(out_file)
+    png = File.read!(out_file)
+    File.rm!(out_file)
+    png
   end
 
   defp generate_random_file, do: Path.join([System.tmp_dir!, "barcode_#{UUID.uuid4()}.png"])
