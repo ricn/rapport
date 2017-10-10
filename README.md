@@ -36,7 +36,7 @@ page_template = "<h1><%= @hello %></h1>"
 html_report =
   Rapport.new
   |> Rapport.add_page(page_template, %{hello: "Hello world!"})
-  |> Rapport.generate_html
+  |> Rapport.save_to_file("/home/users/ricn/hello.html")
 ```
 
 The snippet above generates a report containing only one page with a heading that says "Hello world!".
