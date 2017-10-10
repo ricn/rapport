@@ -230,4 +230,18 @@ defmodule RapportTest do
       end
     end
   end
+
+  describe "save_to_file" do
+    test "must save the report to file" do
+      random_file = Path.join([System.tmp_dir!, "report_#{UUID.uuid4()}.html"])
+
+      Rapport.new
+      |> Rapport.add_page(@hello_template, %{hello: "hello"})
+      |> Rapport.save_to_file(random_file)
+
+      assert File.exists?(random_file)
+      assert File.read!(random_file) =~ "<article>hello</article>"
+    end
+        
+  end
 end

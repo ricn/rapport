@@ -134,7 +134,6 @@ defmodule Rapport do
 
     * `report` - The `Rapport.Report` that you want to generate to HTML.
   """
-
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
     add_page_numbers? = report.page_number_opts.add_page_numbers
@@ -154,6 +153,19 @@ defmodule Rapport do
     ]
 
     EEx.eval_string @base_template, assigns: assigns
+  end
+
+
+  @doc """
+  Convenient function to save a report to file.
+
+  ## Options
+    * `report` - The `Rapport.Report` that you want to save to a HTML file
+    * `file_path` - The path to the HTML file you want to save.
+  """
+  def save_to_file(%Report{} = report, file_path) do
+    html_report = generate_html(report)
+    File.write!(file_path, html_report)
   end
 
   defp paper_settings_css(%Report{} = report) do
