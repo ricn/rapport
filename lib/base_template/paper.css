@@ -41,7 +41,10 @@ body.ledger.landscape       .sheet { width: 432mm; height: 279mm }
   .sheet {
     background: white;
     box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
-    margin: 5mm;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5mm;
+    margin-bottom: 5mm;
   }
 }
 
