@@ -19,5 +19,5 @@ defmodule Rapport.Font do
   end
 
   defp detect_mime_type("wOF2" <> _), do: "font/woff2"
-  defp detect_mime_type(_), do: raise ArgumentError, message: "Invalid font"
+  defp detect_mime_type(_), do: raise(ArgumentError, message: "Invalid font")
 end

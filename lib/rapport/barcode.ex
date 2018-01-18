@@ -1,5 +1,4 @@
 defmodule Rapport.Barcode do
-
   @doc """
   Creates a barcode image (PNG) with the given text
 
@@ -13,10 +12,10 @@ defmodule Rapport.Barcode do
   """
   def create(barcode_type, text, opts \\ []) do
     case barcode_type do
-      :code39   -> create_code39(text, opts)
-      :code93   -> create_code93(text, opts)
-      :code128  -> create_code128(text, opts)
-      :itf      -> create_itf(text, opts)
+      :code39 -> create_code39(text, opts)
+      :code93 -> create_code93(text, opts)
+      :code128 -> create_code128(text, opts)
+      :itf -> create_itf(text, opts)
       _ -> raise ArgumentError, message: "Invalid barcode type"
     end
   end
@@ -57,5 +56,5 @@ defmodule Rapport.Barcode do
     png
   end
 
-  defp generate_random_file, do: Path.join([System.tmp_dir!, "barcode_#{UUID.uuid4()}.png"])
+  defp generate_random_file, do: Path.join([System.tmp_dir!(), "barcode_#{UUID.uuid4()}.png"])
 end

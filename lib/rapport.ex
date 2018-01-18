@@ -1,5 +1,4 @@
 defmodule Rapport do
-
   @moduledoc """
   Rapport aims to provide a robust set of modules to generate
   HTML reports that both looks good in the browser and when being printed.
@@ -52,10 +51,10 @@ defmodule Rapport do
       template: template,
       padding: 10,
       fields: fields,
-      page_number_opts: %PageNumbering {
+      page_number_opts: %PageNumbering{
         add_page_numbers: false,
         page_number_position: :bottom_right,
-        page_number_formatter: fn(cnt_page, _tot_pages) -> "#{cnt_page}" end
+        page_number_formatter: fn cnt_page, _tot_pages -> "#{cnt_page}" end
       }
     }
   end
@@ -87,9 +86,12 @@ defmodule Rapport do
   """
 
   def set_paper_size(%Report{} = report, paper_size) do
-    validate_list(paper_size,
-    [:A4, :A3, :A5, :half_letter, :letter,
-    :legal, :junior_legal, :ledger], "Invalid paper size")
+    validate_list(
+      paper_size,
+      [:A4, :A3, :A5, :half_letter, :letter, :legal, :junior_legal, :ledger],
+      "Invalid paper size"
+    )
+
     Map.put(report, :paper_size, paper_size)
   end
 
@@ -137,12 +139,15 @@ defmodule Rapport do
   def generate_html(%Report{} = report) do
     paper_settings = paper_settings_css(report)
     add_page_numbers? = report.page_number_opts.add_page_numbers
+
     pages =
       case add_page_numbers? do
         true -> generate_pages(report.pages, report.padding, report.page_number_opts)
         false -> generate_pages(report.pages, report.padding)
       end
-    report_template = EEx.eval_string report.template, assigns: report.fields
+
+    report_template = EEx.eval_string(report.template, assigns: report.fields)
+
     assigns = [
       title: report.title,
       paper_settings: paper_settings,
@@ -152,9 +157,8 @@ defmodule Rapport do
       report_template: report_template
     ]
 
-    EEx.eval_string @base_template, assigns: assigns
+    EEx.eval_string(@base_template, assigns: assigns)
   end
-
 
   @doc """
   Convenient function to save a report to file.
@@ -176,6 +180,6 @@ defmodule Rapport do
 
   @doc false
   def validate_list(what, list, msg) do
-    if what not in list, do: raise ArgumentError, message: msg
+    if what not in list, do: raise(ArgumentError, message: msg)
   end
 end

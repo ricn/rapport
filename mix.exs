@@ -6,13 +6,18 @@ defmodule Rapport.Mixfile do
       app: :rapport,
       version: "0.6.4",
       elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: desc(),
       docs: docs(),
       package: package(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -49,9 +54,14 @@ defmodule Rapport.Mixfile do
   end
 
   defp package do
-      [files: ["lib", "mix.exs", "README*", "LICENSE*"],
-       maintainers: ["Richard Nyström"],
-       licenses: ["MIT"],
-       links: %{"GitHub" => "https://github.com/ricn/rapport", "Docs" => "http://hexdocs.pm/rapport"}]
+    [
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["Richard Nyström"],
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/ricn/rapport",
+        "Docs" => "http://hexdocs.pm/rapport"
+      }
+    ]
   end
 end

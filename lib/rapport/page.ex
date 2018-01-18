@@ -45,29 +45,36 @@ defmodule Rapport.Page do
   @doc false
   def generate_pages(pages, padding) when is_list(pages) do
     Enum.reverse(pages)
-    |> Enum.map(fn(page) -> generate_page(page, padding) end)
-    |> Enum.join
+    |> Enum.map(fn page -> generate_page(page, padding) end)
+    |> Enum.join()
   end
 
   @doc false
   def generate_pages(pages, padding, page_number_opts) when is_list(pages) do
     total_pages = Enum.count(pages)
+
     Enum.reverse(pages)
-    |> Enum.with_index
-    |> Enum.map(fn({page, index}) -> generate_page(page, padding, index + 1, total_pages, page_number_opts) end)
-    |> Enum.join
+    |> Enum.with_index()
+    |> Enum.map(fn {page, index} ->
+      generate_page(page, padding, index + 1, total_pages, page_number_opts)
+    end)
+    |> Enum.join()
   end
 
   defp generate_page(p, padding) do
-    EEx.eval_string wrap_page(p.template, padding), assigns: p.fields
+    EEx.eval_string(wrap_page(p.template, padding), assigns: p.fields)
   end
 
   defp generate_page(p, padding, page_number, total_pages, page_number_opts) do
-    EEx.eval_string wrap_page(p.template, padding, page_number, total_pages, page_number_opts), assigns: p.fields
+    EEx.eval_string(
+      wrap_page(p.template, padding, page_number, total_pages, page_number_opts),
+      assigns: p.fields
+    )
   end
 
   defp wrap_page(template, padding) do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
+
     """
     <div class=\"sheet #{padding_css}\">
       #{template}
@@ -79,7 +86,10 @@ defmodule Rapport.Page do
     padding_css = "padding-" <> Integer.to_string(padding) <> "mm"
     position = Atom.to_string(page_number_opts.page_number_position)
     formatter = page_number_opts.page_number_formatter
-    page_number_tag = "<span class='page-numbering #{position}'>#{formatter.(page_number, total_pages)}</span>"
+
+    page_number_tag =
+      "<span class='page-numbering #{position}'>#{formatter.(page_number, total_pages)}</span>"
+
     """
     <div class=\"sheet #{padding_css}\">
       #{template}

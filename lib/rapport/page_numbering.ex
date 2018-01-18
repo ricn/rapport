@@ -14,9 +14,17 @@ defmodule Rapport.PageNumbering do
     * `report` - The `Rapport.Report` that you want set the padding for
     * `page_number_position` - Where the page number will be positioned.
   """
-  def add_page_numbers(%Report{} = report, page_number_position \\ :bottom_right, formatter \\ fn(cnt_page, _) -> "#{cnt_page}" end)
-  when is_atom(page_number_position) do
-    Rapport.validate_list(page_number_position, [:bottom_right, :bottom_left, :top_right, :top_left], "Invalid page number position")
+  def add_page_numbers(
+        %Report{} = report,
+        page_number_position \\ :bottom_right,
+        formatter \\ fn cnt_page, _ -> "#{cnt_page}" end
+      )
+      when is_atom(page_number_position) do
+    Rapport.validate_list(
+      page_number_position,
+      [:bottom_right, :bottom_left, :top_right, :top_left],
+      "Invalid page number position"
+    )
 
     opts =
       report.page_number_opts
@@ -26,5 +34,4 @@ defmodule Rapport.PageNumbering do
 
     Map.put(report, :page_number_opts, opts)
   end
-
 end

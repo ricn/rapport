@@ -9,7 +9,7 @@ defmodule PageTest do
   describe "add_page" do
     test "add one page with template and fields" do
       report =
-        Rapport.new
+        Rapport.new()
         |> Rapport.add_page(@hello_template, %{hello: "Hello world"})
 
       assert length(report.pages) == 1
@@ -18,7 +18,7 @@ defmodule PageTest do
 
     test "add two pages with template and fields" do
       report =
-        Rapport.new
+        Rapport.new()
         |> Rapport.add_page(@hello_template, %{hello: "One"})
         |> Rapport.add_page(@hello_template, %{hello: "Two"})
 
@@ -27,7 +27,7 @@ defmodule PageTest do
 
     test "add one page with a Page struct" do
       report =
-        Rapport.new
+        Rapport.new()
         |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "Hello world"}})
 
       assert length(report.pages) == 1
@@ -36,7 +36,7 @@ defmodule PageTest do
 
     test "add two pages using Page structs" do
       report =
-        Rapport.new
+        Rapport.new()
         |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "One"}})
         |> Rapport.add_page(%Page{template: @hello_template, fields: %{hello: "Two"}})
 
@@ -52,7 +52,7 @@ defmodule PageTest do
       ]
 
       report =
-        Rapport.new
+        Rapport.new()
         |> Rapport.add_pages(list_of_pages)
 
       assert length(report.pages) == 2
