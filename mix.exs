@@ -4,7 +4,7 @@ defmodule Rapport.Mixfile do
   def project do
     [
       app: :rapport,
-      version: "0.6.4",
+      version: "0.6.5",
       elixir: "~> 1.5",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
