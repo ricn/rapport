@@ -1,4 +1,4 @@
-# Rapport
+<p align="center"><img src="test/images/logo/horizontal.png" alt="rapport" height="110px"></p>
 
 Rapport aims to provide a robust set of modules to generate HTML reports that both looks good in the browser and when being printed.
 
