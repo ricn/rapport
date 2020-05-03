@@ -5,7 +5,7 @@ defmodule Rapport.Mixfile do
     [
       app: :rapport,
       version: "0.6.5",
-      elixir: "~> 1.5",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: desc(),
@@ -37,11 +37,11 @@ defmodule Rapport.Mixfile do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      {:excoveralls, "0.9.2", only: [:dev, :test]},
-      {:ex_doc, "0.19.1", only: :dev},
-      {:inch_ex, "1.0.0", only: :docs},
-      {:faker, "0.10.0", only: :test},
-      {:barlix, "0.3.3"},
+      {:excoveralls, "0.12.2", only: [:dev, :test]},
+      {:ex_doc, "0.21.3", only: :dev},
+      {:inch_ex, "2.0.0", only: :docs},
+      {:faker, "0.13.0", only: :test},
+      {:barlix, "0.6.0"},
       {:uuid, "1.1.8"}
     ]
   end
