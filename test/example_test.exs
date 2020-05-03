@@ -10,7 +10,7 @@ defmodule ExampleTest do
       |> Rapport.add_page(page_template, %{hello: "Hello world!"})
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "hello.html"])
+    file = Path.join([File.cwd(), "examples", "hello.html"])
     File.write!(file, html_report)
   end
 
@@ -41,7 +41,7 @@ defmodule ExampleTest do
       |> Rapport.add_page(page_template, %{hello: "Hello world!"})
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "custom_fonts_and_styles.html"])
+    file = Path.join([File.cwd(), "examples", "custom_fonts_and_styles.html"])
     File.write!(file, html_report)
   end
 
@@ -70,7 +70,7 @@ defmodule ExampleTest do
       end)
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "two_page_table.html"])
+    file = Path.join([File.cwd(), "examples", "two_page_table.html"])
     File.write!(file, html_report)
   end
 
@@ -105,7 +105,7 @@ defmodule ExampleTest do
       |> Rapport.add_page(page_template, invoice)
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "invoice.html"])
+    file = Path.join([File.cwd(), "examples", "invoice.html"])
     File.write!(file, html_report)
   end
 
@@ -193,7 +193,7 @@ defmodule ExampleTest do
       |> Rapport.add_pages(pages_with_people)
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "list_of_people.html"])
+    file = Path.join([File.cwd(), "examples", "list_of_people.html"])
     File.write!(file, html_report)
   end
 
@@ -214,7 +214,7 @@ defmodule ExampleTest do
       end)
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "page_numbering.html"])
+    file = Path.join([File.cwd(), "examples", "page_numbering.html"])
     File.write!(file, html_report)
   end
 
@@ -238,7 +238,7 @@ defmodule ExampleTest do
       })
       |> Rapport.generate_html()
 
-    file = Path.join([System.cwd(), "examples", "barcodes.html"])
+    file = Path.join([File.cwd(), "examples", "barcodes.html"])
     File.write!(file, html_report)
   end
 end

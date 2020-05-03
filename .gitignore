@@ -23,3 +23,5 @@ TODO.txt
 
 # Visual Studio code stuff
 /.vscode/
+
+/.elixir_ls/
