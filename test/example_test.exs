@@ -53,8 +53,8 @@ defmodule ExampleTest do
       Enum.map(1..60, fn num ->
         %{
           num: num,
-          firstname: Faker.Name.first_name(),
-          lastname: Faker.Name.last_name(),
+          firstname: Faker.Person.first_name(),
+          lastname: Faker.Person.last_name(),
           phone: Faker.Phone.EnUs.phone(),
           email: Faker.Internet.email()
         }
@@ -144,8 +144,8 @@ defmodule ExampleTest do
       Enum.map(1..250, fn num ->
         %{
           employee_no: 10000 + num,
-          firstname: Faker.Name.first_name(),
-          lastname: Faker.Name.last_name(),
+          firstname: Faker.Person.first_name(),
+          lastname: Faker.Person.last_name(),
           phone: Faker.Phone.EnUs.phone(),
           email: Faker.Internet.email(),
           city: Enum.at(cities, Enum.random(0..7))
