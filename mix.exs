@@ -37,11 +37,11 @@ defmodule Rapport.Mixfile do
     [
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      {:excoveralls, "0.12.2", only: [:dev, :test]},
-      {:ex_doc, "0.21.3", only: :dev},
+      {:excoveralls, "0.14.4", only: [:dev, :test]},
+      {:ex_doc, "0.26.0", only: :dev},
       {:inch_ex, "2.0.0", only: :docs},
-      {:faker, "0.13.0", only: :test},
-      {:barlix, "0.6.0"},
+      {:faker, "0.16.0", only: :test},
+      {:barlix, "0.6.1"},
       {:uuid, "1.1.8"}
     ]
   end
