@@ -11,8 +11,11 @@ defmodule Rapport do
   @paper_css File.read!(Path.join(__DIR__, "base_template/paper.css"))
   @base_template File.read!(Path.join(__DIR__, "base_template/base_template.html.eex"))
 
+  @spec add_page(Report.t(), String.t(), map) :: Rapport.Report.t()
   defdelegate add_page(report, page_template, fields), to: Rapport.Page
+  @spec add_page(Rapport.Report.t(), Rapport.Page.t()) :: Rapport.Report.t()
   defdelegate add_page(report, page), to: Rapport.Page
+  @spec add_pages(Rapport.Report.t(), list(Rapport.Page.t())) :: Rapport.Report.t()
   defdelegate add_pages(report, pages), to: Rapport.Page
 
   defdelegate generate_pages(pages, padding), to: Rapport.Page
