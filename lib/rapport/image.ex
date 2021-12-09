@@ -1,6 +1,6 @@
 defmodule Rapport.Image do
   @doc """
-  Converts an image to a base64 encoded string that can be to embedded in a image tag:
+  Converts an image to a base64 encoded string that can be embedded in a image tag:
 
   <img alt="Embedded Image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIA..." />
 
