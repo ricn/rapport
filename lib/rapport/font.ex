@@ -1,6 +1,6 @@
 defmodule Rapport.Font do
   @doc """
-  Converts a font file (woff2) to a base64 encoded string that can be to embedded:
+  Converts a font file (woff2) to a base64 encoded string that can be embedded:
 
   @font-face {
     src: url(data:font/woff2;charset=utf-8;base64,d09GRgA...kAAA==) format('woff')

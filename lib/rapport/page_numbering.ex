@@ -1,6 +1,12 @@
 defmodule Rapport.PageNumbering do
   defstruct add_page_numbers: nil, page_number_position: nil, page_number_formatter: nil
 
+  @type t :: %Rapport.PageNumbering{
+          add_page_numbers: boolean(),
+          page_number_position: :bottom_right | :bottom_left | :top_right | :top_left,
+          page_number_formatter: function()
+        }
+
   alias Rapport.Report
 
   @doc """
