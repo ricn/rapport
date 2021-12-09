@@ -1,5 +1,6 @@
 defmodule Rapport.Page do
   defstruct template: nil, fields: nil
+  @type t :: %Rapport.Page{template: String.t(), fields: map()}
 
   alias Rapport.Report
   alias Rapport.Page
