@@ -9,7 +9,7 @@ defmodule Rapport.Report do
             page_number_opts: nil
 
   @type t :: %Rapport.Report{
-          paper_size: :A4 | :A3 | :A5 | :half_letter | :letter | :legal | :junior_legal,
+          paper_size: :A4 | :A3 | :A5 | :half_letter | :letter | :legal | :junior_legal | :ledger,
           rotation: :portrait | :landscape,
           title: String.t(),
           pages: list(Rapport.Page),

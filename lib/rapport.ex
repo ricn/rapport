@@ -18,13 +18,19 @@ defmodule Rapport do
   @spec add_pages(Rapport.Report.t(), list(Rapport.Page.t())) :: Rapport.Report.t()
   defdelegate add_pages(report, pages), to: Rapport.Page
 
+  @spec generate_pages(maybe_improper_list, any) :: binary
+  @spec generate_pages(maybe_improper_list, any, any) :: binary
   defdelegate generate_pages(pages, padding), to: Rapport.Page
   defdelegate generate_pages(pages, padding, page_number_opts), to: Rapport.Page
 
+  @spec add_page_numbers(Rapport.Report.t()) :: Rapport.Report.t()
+  @spec add_page_numbers(Rapport.Report.t(), atom, any) :: Rapport.Report.t()
   defdelegate add_page_numbers(report, page_number_position, formatter), to: Rapport.PageNumbering
+  @spec add_page_numbers(Rapport.Report.t(), atom) :: Rapport.Report.t()
   defdelegate add_page_numbers(report, page_number_position), to: Rapport.PageNumbering
   defdelegate add_page_numbers(report), to: Rapport.PageNumbering
 
+  @spec new(any, any) :: Rapport.Report.t()
   @doc """
   Creates a new report.
 
@@ -62,6 +68,7 @@ defmodule Rapport do
     }
   end
 
+  @spec set_title(Rapport.Report.t(), String.t()) :: Rapport.Report.t()
   @doc """
   Sets the title for a report. This is the title of the generated html report.
 
@@ -75,6 +82,10 @@ defmodule Rapport do
     Map.put(report, :title, title)
   end
 
+  @spec set_paper_size(
+          Rapport.Report.t(),
+          :A4 | :A3 | :A5 | :half_letter | :letter | :legal | :junior_legal | :ledger
+        ) :: Rapport.Report.t()
   @doc """
   Sets the paper size for the report.
 
@@ -98,6 +109,7 @@ defmodule Rapport do
     Map.put(report, :paper_size, paper_size)
   end
 
+  @spec set_rotation(Rapport.Report.t(), :portrait | :landscape) :: Rapport.Report.t()
   @doc """
   Sets the rotation for the report.
 
@@ -115,6 +127,7 @@ defmodule Rapport do
     Map.put(report, :rotation, rotation)
   end
 
+  @spec set_padding(Rapport.Report.t(), 10 | 15 | 20 | 25) :: Rapport.Report.t()
   @doc """
   Sets the padding (in millimeters) for the report.
 
@@ -132,6 +145,7 @@ defmodule Rapport do
     Map.put(report, :padding, padding)
   end
 
+  @spec generate_html(Rapport.Report.t()) :: String.t()
   @doc """
   Generates HTML for the report.
 
@@ -163,6 +177,7 @@ defmodule Rapport do
     EEx.eval_string(@base_template, assigns: assigns)
   end
 
+  @spec save_to_file(Rapport.Report.t(), binary) :: :ok
   @doc """
   Convenient function to save a report to file.
 
@@ -170,7 +185,7 @@ defmodule Rapport do
     * `report` - The `Rapport.Report` that you want to save to a HTML file
     * `file_path` - The path to the HTML file you want to save.
   """
-  def save_to_file(%Report{} = report, file_path) do
+  def save_to_file(%Report{} = report, file_path) when is_binary(file_path) do
     html_report = generate_html(report)
     File.write!(file_path, html_report)
   end
@@ -181,6 +196,7 @@ defmodule Rapport do
     if rotation == "portrait", do: paper_size, else: "#{paper_size} #{rotation}"
   end
 
+  @spec validate_list(any, list(), String.t()) :: nil
   @doc false
   def validate_list(what, list, msg) do
     if what not in list, do: raise(ArgumentError, message: msg)
