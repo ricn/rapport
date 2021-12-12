@@ -9,6 +9,11 @@ defmodule Rapport.PageNumbering do
 
   alias Rapport.Report
 
+  @spec add_page_numbers(
+          Rapport.Report.t(),
+          :bottom_right | :bottom_left | :top_right | :top_left,
+          function()
+        ) :: Rapport.Report.t()
   @doc """
   Adds page numbers to the pages
 

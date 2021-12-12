@@ -1,4 +1,5 @@
 defmodule Rapport.Font do
+  @spec as_data(String.t()) :: String.t()
   @doc """
   Converts a font file (woff2) to a base64 encoded string that can be embedded:
 

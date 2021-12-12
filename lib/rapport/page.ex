@@ -5,6 +5,7 @@ defmodule Rapport.Page do
   alias Rapport.Report
   alias Rapport.Page
 
+  @spec add_page(Rapport.Report.t(), binary, map) :: Rapport.Report.t()
   @doc """
   Adds a new page to a report.
 
@@ -20,6 +21,7 @@ defmodule Rapport.Page do
     Map.put(report, :pages, [new_page | report.pages])
   end
 
+  @spec add_page(Rapport.Report.t(), Rapport.Page.t()) :: Rapport.Report.t()
   @doc """
   Adds a new page to a report.
 
@@ -32,6 +34,7 @@ defmodule Rapport.Page do
     Map.put(report, :pages, [page | report.pages])
   end
 
+  @spec add_pages(Rapport.Report.t(), list(Rapport.Page.t())) :: Rapport.Report.t()
   @doc """
   Adds a list of pages to a report.
 
