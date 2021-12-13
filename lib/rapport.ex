@@ -19,8 +19,8 @@ defmodule Rapport do
   @spec add_pages(Report.t(), list(Page.t())) :: Report.t()
   defdelegate add_pages(report, pages), to: Page
 
-  @spec generate_pages(maybe_improper_list, any) :: binary
-  @spec generate_pages(maybe_improper_list, any, any) :: binary
+  @spec generate_pages([Page.t()], Report.padding()) :: String.t()
+  @spec generate_pages([Page.t()], Report.padding(), Rapport.PageNumbering.t()) :: String.t()
   defdelegate generate_pages(pages, padding), to: Page
   defdelegate generate_pages(pages, padding, page_number_opts), to: Page
 
