@@ -51,8 +51,7 @@ defmodule Rapport.Page do
   @doc false
   def generate_pages(pages, padding) when is_list(pages) do
     Enum.reverse(pages)
-    |> Enum.map(fn page -> generate_page(page, padding) end)
-    |> Enum.join()
+    |> Enum.map_join(fn page -> generate_page(page, padding) end)
   end
 
   @spec generate_pages(list(Page.t()), Report.padding(), PageNumbering.t()) :: String.t()
@@ -62,10 +61,9 @@ defmodule Rapport.Page do
 
     Enum.reverse(pages)
     |> Enum.with_index()
-    |> Enum.map(fn {page, index} ->
+    |> Enum.map_join(fn {page, index} ->
       generate_page(page, padding, index + 1, total_pages, page_number_opts)
     end)
-    |> Enum.join()
   end
 
   defp generate_page(p, padding) do

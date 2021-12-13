@@ -41,6 +41,7 @@ defmodule Rapport.Mixfile do
       {:faker, "0.16.0", only: :test},
       {:doctor, "~> 0.18.0", only: :dev},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:barlix, "0.6.1"},
       {:uuid, "1.1.8"}
     ]
