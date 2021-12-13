@@ -25,3 +25,4 @@ TODO.txt
 /.vscode/
 
 /.elixir_ls/
+.DS_Store
