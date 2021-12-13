@@ -1,9 +1,12 @@
 defmodule Rapport.Page do
   defstruct template: nil, fields: nil
+  @type t :: %Rapport.Page{template: String.t(), fields: map()}
 
   alias Rapport.Report
   alias Rapport.Page
+  alias Rapport.PageNumbering
 
+  @spec add_page(Rapport.Report.t(), String.t(), map) :: Rapport.Report.t()
   @doc """
   Adds a new page to a report.
 
@@ -19,6 +22,7 @@ defmodule Rapport.Page do
     Map.put(report, :pages, [new_page | report.pages])
   end
 
+  @spec add_page(Rapport.Report.t(), Rapport.Page.t()) :: Rapport.Report.t()
   @doc """
   Adds a new page to a report.
 
@@ -31,6 +35,7 @@ defmodule Rapport.Page do
     Map.put(report, :pages, [page | report.pages])
   end
 
+  @spec add_pages(Rapport.Report.t(), list(Rapport.Page.t())) :: Rapport.Report.t()
   @doc """
   Adds a list of pages to a report.
 
@@ -42,23 +47,23 @@ defmodule Rapport.Page do
     Map.put(report, :pages, pages ++ report.pages)
   end
 
+  @spec generate_pages(list(Page.t()), Report.padding()) :: binary
   @doc false
   def generate_pages(pages, padding) when is_list(pages) do
     Enum.reverse(pages)
-    |> Enum.map(fn page -> generate_page(page, padding) end)
-    |> Enum.join()
+    |> Enum.map_join(fn page -> generate_page(page, padding) end)
   end
 
+  @spec generate_pages(list(Page.t()), Report.padding(), PageNumbering.t()) :: String.t()
   @doc false
   def generate_pages(pages, padding, page_number_opts) when is_list(pages) do
     total_pages = Enum.count(pages)
 
     Enum.reverse(pages)
     |> Enum.with_index()
-    |> Enum.map(fn {page, index} ->
+    |> Enum.map_join(fn {page, index} ->
       generate_page(page, padding, index + 1, total_pages, page_number_opts)
     end)
-    |> Enum.join()
   end
 
   defp generate_page(p, padding) do
