@@ -5,23 +5,33 @@ defmodule Rapport do
   """
 
   alias Rapport.Report
+  alias Rapport.Page
   alias Rapport.PageNumbering
 
   @normalize_css File.read!(Path.join(__DIR__, "base_template/normalize.css"))
   @paper_css File.read!(Path.join(__DIR__, "base_template/paper.css"))
   @base_template File.read!(Path.join(__DIR__, "base_template/base_template.html.eex"))
 
-  defdelegate add_page(report, page_template, fields), to: Rapport.Page
-  defdelegate add_page(report, page), to: Rapport.Page
-  defdelegate add_pages(report, pages), to: Rapport.Page
+  @spec add_page(Report.t(), String.t(), map) :: Report.t()
+  defdelegate add_page(report, page_template, fields), to: Page
+  @spec add_page(Report.t(), Page.t()) :: Report.t()
+  defdelegate add_page(report, page), to: Page
+  @spec add_pages(Report.t(), list(Page.t())) :: Report.t()
+  defdelegate add_pages(report, pages), to: Page
 
-  defdelegate generate_pages(pages, padding), to: Rapport.Page
-  defdelegate generate_pages(pages, padding, page_number_opts), to: Rapport.Page
+  @spec generate_pages([Page.t()], Report.padding()) :: String.t()
+  @spec generate_pages([Page.t()], Report.padding(), Rapport.PageNumbering.t()) :: String.t()
+  defdelegate generate_pages(pages, padding), to: Page
+  defdelegate generate_pages(pages, padding, page_number_opts), to: Page
 
-  defdelegate add_page_numbers(report, page_number_position, formatter), to: Rapport.PageNumbering
-  defdelegate add_page_numbers(report, page_number_position), to: Rapport.PageNumbering
-  defdelegate add_page_numbers(report), to: Rapport.PageNumbering
+  @spec add_page_numbers(Report.t()) :: Report.t()
+  @spec add_page_numbers(Report.t(), atom, any) :: Report.t()
+  defdelegate add_page_numbers(report, page_number_position, formatter), to: PageNumbering
+  @spec add_page_numbers(Report.t(), atom) :: Report.t()
+  defdelegate add_page_numbers(report, page_number_position), to: PageNumbering
+  defdelegate add_page_numbers(report), to: PageNumbering
 
+  @spec new(String.t(), map()) :: Report.t()
   @doc """
   Creates a new report.
 
@@ -59,6 +69,7 @@ defmodule Rapport do
     }
   end
 
+  @spec set_title(Report.t(), String.t()) :: Report.t()
   @doc """
   Sets the title for a report. This is the title of the generated html report.
 
@@ -72,6 +83,10 @@ defmodule Rapport do
     Map.put(report, :title, title)
   end
 
+  @spec set_paper_size(
+          Report.t(),
+          Report.paper_size()
+        ) :: Report.t()
   @doc """
   Sets the paper size for the report.
 
@@ -95,6 +110,7 @@ defmodule Rapport do
     Map.put(report, :paper_size, paper_size)
   end
 
+  @spec set_rotation(Report.t(), Report.rotation()) :: Report.t()
   @doc """
   Sets the rotation for the report.
 
@@ -112,6 +128,7 @@ defmodule Rapport do
     Map.put(report, :rotation, rotation)
   end
 
+  @spec set_padding(Report.t(), Report.padding()) :: Report.t()
   @doc """
   Sets the padding (in millimeters) for the report.
 
@@ -129,6 +146,7 @@ defmodule Rapport do
     Map.put(report, :padding, padding)
   end
 
+  @spec generate_html(Report.t()) :: String.t()
   @doc """
   Generates HTML for the report.
 
@@ -160,6 +178,7 @@ defmodule Rapport do
     EEx.eval_string(@base_template, assigns: assigns)
   end
 
+  @spec save_to_file(Report.t(), binary) :: :ok
   @doc """
   Convenient function to save a report to file.
 
@@ -167,7 +186,7 @@ defmodule Rapport do
     * `report` - The `Rapport.Report` that you want to save to a HTML file
     * `file_path` - The path to the HTML file you want to save.
   """
-  def save_to_file(%Report{} = report, file_path) do
+  def save_to_file(%Report{} = report, file_path) when is_binary(file_path) do
     html_report = generate_html(report)
     File.write!(file_path, html_report)
   end
@@ -178,6 +197,7 @@ defmodule Rapport do
     if rotation == "portrait", do: paper_size, else: "#{paper_size} #{rotation}"
   end
 
+  @spec validate_list(any, list(), String.t()) :: nil
   @doc false
   def validate_list(what, list, msg) do
     if what not in list, do: raise(ArgumentError, message: msg)

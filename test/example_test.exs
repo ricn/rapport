@@ -201,7 +201,7 @@ defmodule ExampleTest do
     page_template =
       File.read!(Path.join(__DIR__, "example_templates/page_numbering_page.html.eex"))
 
-    random_text = Enum.map(1..6, fn _ -> Faker.Lorem.paragraphs() end) |> Enum.join()
+    random_text = Enum.map_join(1..6, fn _ -> Faker.Lorem.paragraphs() end)
     fields = %{text: random_text}
 
     pages = Enum.map(1..4, fn _ -> %Rapport.Page{template: page_template, fields: fields} end)
