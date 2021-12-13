@@ -30,7 +30,7 @@ defmodule Rapport do
   defdelegate add_page_numbers(report, page_number_position), to: Rapport.PageNumbering
   defdelegate add_page_numbers(report), to: Rapport.PageNumbering
 
-  @spec new(any, any) :: Rapport.Report.t()
+  @spec new(String.t(), map()) :: Rapport.Report.t()
   @doc """
   Creates a new report.
 
@@ -84,7 +84,7 @@ defmodule Rapport do
 
   @spec set_paper_size(
           Rapport.Report.t(),
-          :A4 | :A3 | :A5 | :half_letter | :letter | :legal | :junior_legal | :ledger
+          Rapport.Report.paper_size()
         ) :: Rapport.Report.t()
   @doc """
   Sets the paper size for the report.
@@ -109,7 +109,7 @@ defmodule Rapport do
     Map.put(report, :paper_size, paper_size)
   end
 
-  @spec set_rotation(Rapport.Report.t(), :portrait | :landscape) :: Rapport.Report.t()
+  @spec set_rotation(Rapport.Report.t(), Report.rotation()) :: Rapport.Report.t()
   @doc """
   Sets the rotation for the report.
 
@@ -127,7 +127,7 @@ defmodule Rapport do
     Map.put(report, :rotation, rotation)
   end
 
-  @spec set_padding(Rapport.Report.t(), 10 | 15 | 20 | 25) :: Rapport.Report.t()
+  @spec set_padding(Rapport.Report.t(), Report.padding()) :: Rapport.Report.t()
   @doc """
   Sets the padding (in millimeters) for the report.
 

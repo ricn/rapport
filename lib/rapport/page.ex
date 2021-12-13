@@ -4,8 +4,9 @@ defmodule Rapport.Page do
 
   alias Rapport.Report
   alias Rapport.Page
+  alias Rapport.PageNumbering
 
-  @spec add_page(Rapport.Report.t(), binary, map) :: Rapport.Report.t()
+  @spec add_page(Rapport.Report.t(), String.t(), map) :: Rapport.Report.t()
   @doc """
   Adds a new page to a report.
 
@@ -46,6 +47,7 @@ defmodule Rapport.Page do
     Map.put(report, :pages, pages ++ report.pages)
   end
 
+  @spec generate_pages(list(Page.t()), Report.padding()) :: binary
   @doc false
   def generate_pages(pages, padding) when is_list(pages) do
     Enum.reverse(pages)
@@ -53,6 +55,7 @@ defmodule Rapport.Page do
     |> Enum.join()
   end
 
+  @spec generate_pages(list(Page.t()), Report.padding(), PageNumbering.t()) :: String.t()
   @doc false
   def generate_pages(pages, padding, page_number_opts) when is_list(pages) do
     total_pages = Enum.count(pages)
