@@ -31,3 +31,5 @@ jobs:
       run: MIX_ENV=test mix test
     - name: "Report test coverage"
       run: MIX_ENV=test mix coveralls.github
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
