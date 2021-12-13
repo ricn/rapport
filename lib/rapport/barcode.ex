@@ -34,13 +34,7 @@ defmodule Rapport.Barcode do
   end
 
   defp create_barcode(text, opts, barlix_module) do
-    out_file = generate_random_file()
-    opts = Keyword.put(opts, :file, out_file)
-    barlix_module.encode!(text) |> Barlix.PNG.print(opts)
-    png = File.read!(out_file)
-    File.rm!(out_file)
-    png
+    {:ok, png} = barlix_module.encode!(text) |> Barlix.PNG.print(opts)
+    IO.iodata_to_binary(png)
   end
-
-  defp generate_random_file, do: Path.join([System.tmp_dir!(), "barcode_#{UUID.uuid4()}.png"])
 end
