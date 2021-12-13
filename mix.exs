@@ -1,10 +1,12 @@
 defmodule Rapport.Mixfile do
   use Mix.Project
 
+  @version "0.7.0"
+
   def project do
     [
       app: :rapport,
-      version: "0.7.0",
+      version: @version,
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -29,7 +31,33 @@ defmodule Rapport.Mixfile do
   end
 
   defp docs do
-    [extras: ["README.md"], main: "readme"]
+    [
+      source_ref: "v#{@version}",
+      extras: ["README.md"],
+      main: "overview",
+      logo: "assets/vertical.png",
+      extra_section: "GUIDES",
+      assets: "guides/assets",
+      formatters: ["html"],
+      extras: extras(),
+      groups_for_extras: groups_for_extras()
+    ]
+  end
+
+  defp extras do
+    [
+      # Introduction
+
+      "guides/introduction/overview.md",
+      "guides/introduction/installation.md",
+      "guides/introduction/basic_usage.md"
+    ]
+  end
+
+  defp groups_for_extras do
+    [
+      Introduction: ~r/guides\/introduction\/.?/
+    ]
   end
 
   # Run "mix help deps" to learn about dependencies.
