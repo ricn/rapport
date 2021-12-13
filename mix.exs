@@ -40,6 +40,7 @@ defmodule Rapport.Mixfile do
       {:inch_ex, "2.0.0", only: :docs},
       {:faker, "0.16.0", only: :test},
       {:doctor, "~> 0.18.0", only: :dev},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:barlix, "0.6.1"},
       {:uuid, "1.1.8"}
     ]
