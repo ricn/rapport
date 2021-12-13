@@ -10,3 +10,7 @@
 <div>
   <img src="<%= @itf %>" />
 </div>
+
+<div>
+  <img src="<%= @ean13 %>" />
+</div>
