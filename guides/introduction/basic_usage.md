@@ -1,7 +1,5 @@
 # Basic usage
 
-## Hello world
-
 ```elixir
 page_template = "<h1><%= @hello %></h1>"
 

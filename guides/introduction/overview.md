@@ -13,6 +13,6 @@ Rapport aims to provide a robust set of modules to generate HTML reports that bo
 - Barcodes
 - Can easily be converted to PDF or an image
 
-## Example invoice created with Rapport:
+## Invoice example
 
 ![Example](https://raw.github.com/ricn/rapport/master/assets/example.png)
