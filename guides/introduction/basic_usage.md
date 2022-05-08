@@ -8,7 +8,7 @@ Rapport.new
   |> Rapport.save_to_file("/your/path/hello.html")
 ```
 
-First we need to define a page template called `page_template` which is just a simple [EEx](https://hexdocs.pm/eex/EEx.html) template which allows you to embed Elixir code inside a string in a robust way.
+First we need to define a page template called `page_template` which is just a simple [EEx](https://hexdocs.pm/eex/EEx.html) template that allows you to embed Elixir code inside a string in a robust way.
 
 Next we call `Rapport.new` which will setup a basic report with sane defaults.
 
