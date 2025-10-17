@@ -42,11 +42,11 @@ defmodule Rapport.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:excoveralls, "0.18.1", only: [:dev, :test]},
-      {:ex_doc, "0.32.1", only: :dev},
+      {:excoveralls, "0.18.5", only: [:dev, :test]},
+      {:ex_doc, "0.38.4", only: :dev},
       {:inch_ex, "2.0.0", only: :docs},
       {:faker, "0.18.0", only: :test},
-      {:doctor, "0.21.0", only: :dev},
+      {:doctor, "0.22.0", only: :dev},
       {:dialyxir, "1.4.3", only: [:dev], runtime: false},
       {:credo, "1.7.13", only: [:dev, :test], runtime: false},
       {:barlix, "0.6.4"},
