@@ -1,4 +1,8 @@
 defmodule Rapport.Image do
+  @moduledoc """
+  Provides utilities for converting images to base64 encoded data URLs for embedding in reports.
+  """
+
   @spec as_data(String.t()) :: String.t()
   @doc """
   Converts an image to a base64 encoded string that can be embedded in a image tag:

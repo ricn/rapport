@@ -1,4 +1,8 @@
 defmodule Rapport.Barcode do
+  @moduledoc """
+  Provides functionality for creating barcodes in various formats for use in reports.
+  """
+
   @spec create(:code128 | :code39 | :code93 | :itf | :ean13, String.t(), keyword) :: String.t()
   @doc """
   Creates a barcode image (PNG) with the given text

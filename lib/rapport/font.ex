@@ -1,4 +1,8 @@
 defmodule Rapport.Font do
+  @moduledoc """
+  Provides utilities for converting font files to base64 encoded data URLs for embedding in reports.
+  """
+
   @spec as_data(String.t()) :: String.t()
   @doc """
   Converts a font file (woff2) to a base64 encoded string that can be embedded:

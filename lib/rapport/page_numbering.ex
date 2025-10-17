@@ -1,4 +1,8 @@
 defmodule Rapport.PageNumbering do
+  @moduledoc """
+  Provides functionality for adding and formatting page numbers in reports.
+  """
+
   defstruct add_page_numbers: nil, page_number_position: nil, page_number_formatter: nil
 
   @type t :: %Rapport.PageNumbering{

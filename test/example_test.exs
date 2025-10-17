@@ -143,7 +143,7 @@ defmodule ExampleTest do
     all_people =
       Enum.map(1..250, fn num ->
         %{
-          employee_no: 10000 + num,
+          employee_no: 10_000 + num,
           firstname: Faker.Person.first_name(),
           lastname: Faker.Person.last_name(),
           phone: Faker.Phone.EnUs.phone(),
@@ -158,7 +158,7 @@ defmodule ExampleTest do
     # Creates the data for the cover page and sorts the result by city
     cover_page_data =
       Enum.map(cities, fn city ->
-        num_of_employees = all_people |> Enum.filter(fn p -> p.city == city end) |> Enum.count()
+        num_of_employees = Enum.count(all_people, fn p -> p.city == city end)
         num_of_pages = round(Float.ceil(num_of_employees / people_per_page))
 
         %{

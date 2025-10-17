@@ -1,4 +1,8 @@
 defmodule Rapport.Report do
+  @moduledoc """
+  Defines the core Report structure and types for managing report configuration and content.
+  """
+
   defstruct paper_size: nil,
             rotation: nil,
             title: nil,

@@ -1,4 +1,8 @@
 defmodule Rapport.Page do
+  @moduledoc """
+  Provides functionality for adding and managing pages in a Rapport report.
+  """
+
   defstruct template: nil, fields: nil
   @type t :: %Rapport.Page{template: String.t(), fields: map()}
 
