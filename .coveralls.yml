@@ -1,0 +1,17 @@
+# Coveralls configuration
+# Coverage settings for ExCoveralls
+
+# Minimum coverage percentage to pass
+# Set to 0 to disable failing on low coverage
+coverage_options:
+  minimum_coverage: 80
+  
+# Files/directories to skip from coverage
+skip_files:
+  - test/
+  - deps/
+  - _build/
+
+# Custom source paths (if needed)
+# source_paths:
+#   - lib/

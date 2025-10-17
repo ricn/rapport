@@ -26,3 +26,9 @@ TODO.txt
 
 /.elixir_ls/
 .DS_Store
+
+# Dialyzer PLT files
+/priv/plts/
+
+# Coverage reports
+/cover/

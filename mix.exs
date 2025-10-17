@@ -16,7 +16,14 @@ defmodule Rapport.Mixfile do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        "coveralls.github": :test,
+        dialyzer: :dev
+      ],
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        plt_add_apps: [:mix, :ex_unit],
+        flags: [:error_handling, :race_conditions, :underspecs]
       ]
     ]
   end
@@ -41,8 +48,8 @@ defmodule Rapport.Mixfile do
       {:faker, "0.18.0", only: :test},
       {:doctor, "0.21.0", only: :dev},
       {:dialyxir, "1.4.3", only: [:dev], runtime: false},
-      {:credo, "1.7.5", only: [:dev, :test], runtime: false},
-      {:barlix, "0.6.3"},
+      {:credo, "1.7.13", only: [:dev, :test], runtime: false},
+      {:barlix, "0.6.4"},
       {:uuid, "1.1.8"}
     ]
   end
